@@ -549,31 +549,50 @@ class DashboardManager {
         }
     }
 
+    focusSOSById(sosId) {
+        const record = this.sosRecords.find(r => r.id === sosId);
+        let lat = 17.3850;
+        let lng = 78.4867;
+
+        if (record) {
+            lat = record.latitude !== undefined ? record.latitude : (record.location ? record.location.lat : 17.3850);
+            lng = record.longitude !== undefined ? record.longitude : (record.location ? record.location.lng : 78.4867);
+        }
+
+        this.focusSOSOnMap(sosId, lat, lng);
+    }
+
     focusSOSOnMap(sosId, lat, lng) {
+        const targetLat = parseFloat(lat) || 17.3850;
+        const targetLng = parseFloat(lng) || 78.4867;
+
         // Auto-switch to Overview or Live Map tab if on another view
         if (this.activeView !== 'overview' && this.activeView !== 'live-map') {
             this.switchView('overview');
         }
 
-        setTimeout(() => {
+        const doZoom = () => {
             if (this.mapManager && this.mapManager.map) {
                 this.mapManager.map.invalidateSize();
-                this.mapManager.focusSOSLocation(sosId, lat, lng, 17);
+                this.mapManager.focusSOSLocation(sosId, targetLat, targetLng, 17);
             }
             if (this.fullMapManager && this.fullMapManager.map) {
                 this.fullMapManager.map.invalidateSize();
-                this.fullMapManager.focusSOSLocation(sosId, lat, lng, 17);
+                this.fullMapManager.focusSOSLocation(sosId, targetLat, targetLng, 17);
             }
 
             const activeMap = (this.activeView === 'live-map') ? document.getElementById('full-map') : document.getElementById('main-map');
             if (activeMap) {
                 activeMap.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
+        };
 
-            if (window.ResQNotifications) {
-                window.ResQNotifications.showToast(`🔍 Zoomed Close-up (Level 17) on ${sosId}`, 'info');
-            }
-        }, 150);
+        doZoom();
+        setTimeout(doZoom, 200);
+
+        if (window.ResQNotifications) {
+            window.ResQNotifications.showToast(`🔍 Zoomed Close-up (Level 17) on ${sosId}`, 'info');
+        }
     }
 
     plotUnitsOnMap(units, targetMapManager) {
@@ -662,7 +681,7 @@ class DashboardManager {
             ` : '';
 
             return `
-                <div class="glass-panel sos-feed-card" style="padding:1.15rem; margin-bottom:0.85rem; border-left:4px solid var(--${priorityClass}); cursor:pointer;" onclick="window.ResQDashboard.focusSOSOnMap('${s.id}', ${s.latitude}, ${s.longitude})">
+                <div class="glass-panel sos-feed-card" style="padding:1.15rem; margin-bottom:0.85rem; border-left:4px solid var(--${priorityClass}); cursor:pointer;" onclick="window.ResQDashboard.focusSOSById('${s.id}')">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
                         <div>
                             <span class="badge-tag" style="background:var(--${priorityClass}-bg); color:var(--${priorityClass}); border:1px solid var(--${priorityClass}); font-weight:800;">${priorityText}</span>
@@ -770,7 +789,7 @@ class DashboardManager {
             const assignedUnitName = s.assigned_unit_name || (unitObj ? unitObj.name : s.assigned_unit || 'Team Alpha');
 
             return `
-                <div class="glass-panel" style="padding:1.35rem; display:flex; flex-direction:column; justify-content:space-between; border-left:4px solid var(--${priorityClass});">
+                <div class="glass-panel" style="padding:1.35rem; display:flex; flex-direction:column; justify-content:space-between; border-left:4px solid var(--${priorityClass}); cursor:pointer;" onclick="window.ResQDashboard.focusSOSById('${s.id}')">
                     <div>
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
                             <span class="badge-tag" style="background:var(--${priorityClass}-bg); color:var(--${priorityClass}); border:1px solid var(--${priorityClass}); font-weight:800;">${priorityText}</span>

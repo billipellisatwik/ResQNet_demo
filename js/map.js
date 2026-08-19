@@ -1,5 +1,5 @@
 /**
- * ResQNet GIS Map Manager v2.2
+ * ResQNet GIS Map Manager v2.4
  * High-performance Leaflet integration with Dark Glassmorphic styling,
  * animated radar markers, custom popups, polyline routes, clusters, heatmap, and risk overlays.
  */
@@ -141,13 +141,16 @@ class MapManager {
             </div>
         `;
 
-        const marker = L.marker([data.latitude, data.longitude], { icon: customIcon }).bindPopup(popupContent);
+        const markerLat = parseFloat(data.latitude || (data.location ? data.location.lat : 17.3850));
+        const markerLng = parseFloat(data.longitude || (data.location ? data.location.lng : 78.4867));
+
+        const marker = L.marker([markerLat, markerLng], { icon: customIcon }).bindPopup(popupContent);
         this.layers.sos.addLayer(marker);
         this.sosMarkers[data.id] = marker;
 
         if (isCritical) {
             // Add geographic risk circle
-            const riskCircle = L.circle([data.latitude, data.longitude], {
+            const riskCircle = L.circle([markerLat, markerLng], {
                 radius: 400,
                 color: color,
                 fillColor: color,
@@ -189,7 +192,10 @@ class MapManager {
             </div>
         `;
 
-        const marker = L.marker([unit.location.lat, unit.location.lng], { icon: customIcon }).bindPopup(popupContent);
+        const unitLat = parseFloat(unit.location ? unit.location.lat : 17.3850);
+        const unitLng = parseFloat(unit.location ? unit.location.lng : 78.4867);
+
+        const marker = L.marker([unitLat, unitLng], { icon: customIcon }).bindPopup(popupContent);
         this.layers.units.addLayer(marker);
         this.unitMarkers[unit.id] = marker;
     }
@@ -268,20 +274,27 @@ class MapManager {
     }
 
     /**
-     * Smoothly animate, zoom in close-up (level 17), and open popup on specific SOS coordinates
+     * Smoothly animate, zoom in close-up (level 18 pinpoint), and open popup on specific SOS coordinates
      */
-    focusSOSLocation(sosId, lat, lng, zoom = 17) {
+    focusSOSLocation(sosId, lat, lng, zoom = 18) {
         if (!this.map) return;
-        this.map.setView([lat, lng], zoom, {
+        const targetLat = parseFloat(lat) || 17.3850;
+        const targetLng = parseFloat(lng) || 78.4867;
+
+        this.map.invalidateSize();
+        
+        // Fly directly to exact pinpoint coordinates at maximum zoom level 18
+        this.map.flyTo([targetLat, targetLng], 18, {
             animate: true,
-            duration: 1.0
+            duration: 1.2
         });
-        if (sosId && this.sosMarkers[sosId]) {
+
+        if (sosId && this.sosMarkers && this.sosMarkers[sosId]) {
             setTimeout(() => {
                 if (this.sosMarkers[sosId]) {
                     this.sosMarkers[sosId].openPopup();
                 }
-            }, 350);
+            }, 500);
         }
     }
 

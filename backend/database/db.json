@@ -1,6 +1,40 @@
 {
   "sos": [
     {
+      "id": "RESQ-635A771A",
+      "category": "Flood Emergency",
+      "category_icon": "\ud83c\udf0a",
+      "description": "Flood Emergency assistance required urgently.",
+      "people_count": 1,
+      "latitude": 18.641582298970885,
+      "longitude": 79.5466916283754,
+      "accuracy": 8.0,
+      "location_type": "GPS ACCURATE",
+      "phone": "+91 Mobile Client",
+      "citizen_name": "Citizen Mobile",
+      "created_at": "2026-08-19T10:05:23.199083",
+      "status": "safe",
+      "priority": "CRITICAL",
+      "priority_score": 100,
+      "requested_services": [
+        "ALL SERVICES DISPATCHED (Medical + Rescue Boat + Food + Shelter)"
+      ],
+      "is_all_services": true,
+      "urgency_badge": "\ud83d\udea8 CRITICAL: ALL SERVICES DISPATCHED",
+      "assigned_unit": "RU-LOCAL-9C0E5740",
+      "assigned_unit_name": "NDRF Local District Squad (18.64\u00b0N, 79.55\u00b0E) Express Squad",
+      "assigned_unit_distance_km": 0.46,
+      "assigned_unit_eta_mins": 1,
+      "nearest_unit_id": "RU-LOCAL-9C0E5740",
+      "nearest_unit_name": "NDRF Local District Squad (18.64\u00b0N, 79.55\u00b0E) Express Squad",
+      "nearest_unit_distance_km": 0.46,
+      "nearest_unit_eta_mins": 1,
+      "outcome": "RESCUED_BY_OTHERS",
+      "citizen_reported_rescued": true,
+      "verification_required": false,
+      "safe_at": "2026-08-19T10:13:56.888019"
+    },
+    {
       "id": "RESQ-61C5AACB",
       "category": "Flood Emergency",
       "category_icon": "\ud83c\udf0a",
