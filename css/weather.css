@@ -1,0 +1,143 @@
+/* ==========================================================================
+   RESQNET WEATHER INTELLIGENCE STYLES v2.0
+   Meteorological Forecast Dashboard & Rainfall Zoning
+   ========================================================================== */
+
+.weather-dashboard-grid {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 1.5rem;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 4rem;
+}
+
+.weather-current-card {
+  padding: 1.75rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.weather-temp-huge {
+  font-size: 3.5rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.weather-condition-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.weather-metrics-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.weather-metric-item {
+  background: var(--bg-panel);
+  padding: 0.75rem 0.85rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+}
+
+.weather-metric-value {
+  font-size: 1.15rem;
+  font-weight: 800;
+}
+
+.weather-metric-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Composite Risk Score Meter */
+.risk-score-gauge-card {
+  padding: 1.5rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  text-align: center;
+}
+
+.risk-score-number {
+  font-size: 3.25rem;
+  font-weight: 900;
+  color: var(--danger);
+  line-height: 1;
+  text-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+}
+
+.risk-score-bar-wrapper {
+  height: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin: 1rem 0;
+}
+
+.risk-score-bar-fill {
+  height: 100%;
+  background: linear-gradient(to right, #10B981, #F59E0B, #EF4444, #8B5CF6);
+  border-radius: var(--radius-full);
+  transition: width 600ms ease;
+}
+
+/* Timeline Scrubber Slider */
+.weather-timeline-scrubber {
+  padding: 1.25rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.timeline-range-input {
+  width: 100%;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+/* Safe Places Ranking Cards */
+.safe-places-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.safe-place-card {
+  padding: 1rem 1.25rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all var(--transition-fast);
+}
+
+.safe-place-card:hover {
+  border-color: var(--success);
+  transform: translateX(4px);
+}
+
+@media (max-width: 1024px) {
+  .weather-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}

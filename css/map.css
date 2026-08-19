@@ -1,0 +1,104 @@
+/* ==========================================================================
+   RESQNET TACTICAL MAP STYLES v3.0
+   Tactical GIS Canvas, Dark Tile Filter, Neon Marker Glows & Popups
+   ========================================================================== */
+
+#main-map {
+  width: 100%;
+  height: 520px;
+  border-radius: var(--radius-lg);
+  z-index: 1;
+}
+
+#tracking-map {
+  width: 100%;
+  height: 340px;
+  border-radius: var(--radius-lg);
+  z-index: 1;
+}
+
+#weather-map {
+  width: 100%;
+  height: 600px;
+  border-radius: var(--radius-lg);
+  z-index: 1;
+}
+
+/* Custom Tactical Leaflet Popups */
+.leaflet-popup-content-wrapper {
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: var(--text-primary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-lg), 0 0 25px rgba(0, 0, 0, 0.7);
+  font-family: var(--font-main);
+  padding: 0.25rem;
+}
+
+.leaflet-popup-tip {
+  background: #0F172A;
+  border: 1px solid var(--border-color);
+}
+
+.leaflet-container {
+  font-family: var(--font-main) !important;
+  background: #050811 !important;
+}
+
+/* Custom Pulsing Leaflet Markers */
+.custom-leaflet-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+.custom-leaflet-marker:hover {
+  transform: scale(1.15);
+}
+
+.marker-pulse-danger {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 42, 84, 0.25);
+  border: 2px solid var(--danger);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-glow-red);
+  animation: map-pulse 1.6s infinite ease-in-out;
+}
+
+.marker-pulse-success {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(0, 230, 118, 0.25);
+  border: 2px solid var(--success);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-glow-green);
+}
+
+.marker-pulse-primary {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(0, 242, 254, 0.25);
+  border: 2px solid var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-glow-blue);
+}
+
+@keyframes map-pulse {
+  0% { transform: scale(0.95); opacity: 1; box-shadow: 0 0 10px rgba(255, 42, 84, 0.6); }
+  50% { transform: scale(1.2); opacity: 0.7; box-shadow: 0 0 25px rgba(255, 42, 84, 0.9); }
+  100% { transform: scale(0.95); opacity: 1; box-shadow: 0 0 10px rgba(255, 42, 84, 0.6); }
+}

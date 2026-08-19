@@ -1,0 +1,279 @@
+/* ==========================================================================
+   RESQNET CITIZEN PORTAL STYLES v3.0
+   Mobile-First, Futuristic Tactical HUD, High-Contrast & Pulsing 3D SOS
+   ========================================================================== */
+
+.citizen-container {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+/* Header Status Card */
+.citizen-header-card {
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.user-location-info h2 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.location-accuracy-badge {
+  font-size: 0.775rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+  font-family: var(--font-mono);
+}
+
+/* GIANT 3D PULSING SOS TRIGGER BUTTON */
+.sos-trigger-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.75rem 1rem;
+  position: relative;
+}
+
+.sos-main-button {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #FF5277 0%, #FF2A54 50%, #B30026 100%);
+  border: 6px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 18px 45px rgba(255, 42, 84, 0.6),
+    0 0 60px rgba(255, 42, 84, 0.45),
+    inset 0 -10px 18px rgba(0, 0, 0, 0.45),
+    inset 0 10px 18px rgba(255, 255, 255, 0.45);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  cursor: pointer;
+  outline: none;
+  transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 200ms ease;
+  position: relative;
+  user-select: none;
+  z-index: 5;
+}
+
+.sos-main-button:hover {
+  transform: scale(1.08);
+  box-shadow: 
+    0 22px 55px rgba(255, 42, 84, 0.75),
+    0 0 80px rgba(255, 42, 84, 0.6),
+    inset 0 -10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.sos-main-button:active {
+  transform: scale(0.95);
+  box-shadow: 0 10px 25px rgba(255, 42, 84, 0.6);
+}
+
+.sos-button-icon {
+  font-size: 3.75rem;
+  line-height: 1;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4));
+}
+
+.sos-button-text {
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+  margin-top: 0.35rem;
+}
+
+.sos-pulse-wave {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: rgba(255, 42, 84, 0.35);
+  z-index: 1;
+  animation: sos-wave-expand 2.2s infinite cubic-bezier(0, 0.2, 0.8, 1);
+}
+
+@keyframes sos-wave-expand {
+  0% { transform: scale(1); opacity: 0.85; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+
+/* Category Selection Grid */
+.category-selection-title {
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  margin-bottom: 0.85rem;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.85rem;
+}
+
+.category-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1.15rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.category-card:hover, .category-card.selected {
+  border-color: var(--primary);
+  background: var(--primary-bg);
+  box-shadow: 0 0 20px rgba(0, 242, 254, 0.3), inset 0 0 10px rgba(0, 242, 254, 0.15);
+  transform: translateY(-3px);
+}
+
+.category-card-icon {
+  font-size: 2rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.category-card-name {
+  font-size: 0.785rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+/* Form Panel */
+.sos-details-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sos-textarea {
+  width: 100%;
+  min-height: 95px;
+  padding: 0.95rem 1.15rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background: var(--bg-input);
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  font-size: 0.925rem;
+  resize: vertical;
+  outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.sos-textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0, 242, 254, 0.25);
+}
+
+/* Location Search Input & Suggestions Dropdown */
+.area-search-container {
+  position: relative;
+  margin-bottom: 0.85rem;
+}
+
+.area-search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.area-search-input {
+  width: 100%;
+  padding: 0.8rem 1rem 0.8rem 2.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background: var(--bg-surface-solid, #0F172A);
+  color: var(--text-primary, #FFFFFF);
+  font-size: 0.925rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.area-search-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0, 242, 254, 0.25);
+}
+
+.area-search-icon {
+  position: absolute;
+  left: 0.85rem;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+
+.area-suggestions-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 4px;
+  background: #0F172A;
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.15));
+  border-radius: var(--radius-md);
+  max-height: 220px;
+  overflow-y: auto;
+  z-index: 100001;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8);
+  display: none;
+}
+
+.area-suggestion-item {
+  padding: 0.7rem 0.95rem;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  transition: background 0.15s ease;
+}
+
+.area-suggestion-item:last-child {
+  border-bottom: none;
+}
+
+.area-suggestion-item:hover, .area-suggestion-item.active {
+  background: rgba(0, 242, 254, 0.25);
+  color: var(--info, #00E5FF);
+}
+
+/* Quick Contacts */
+.quick-contacts-bar {
+  display: flex;
+  gap: 0.85rem;
+}
+
+.quick-contacts-bar .btn {
+  flex: 1;
+  padding: 0.85rem;
+  font-size: 0.95rem;
+}
