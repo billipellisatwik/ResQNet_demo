@@ -697,17 +697,13 @@ class DashboardManager {
                             🟢 ${this.getLabelTranslation('safeTag')} &bull; ${s.outcome === 'RESCUED_BY_OTHERS' ? lblRescuedByOthers : lblRescuedByResQNet}
                         </div>` :
                         `
-                        <div style="display:flex; flex-direction:column; gap:0.4rem;">
-                            ${(s.status === 'assigned' || s.status === 'dispatched' || s.status === 'en_route') ? `
-                                <button class="btn btn-sm btn-secondary" style="border-color:var(--info); color:var(--info);" onclick="window.ResQDashboard.markTeamReached('${s.id}')">
-                                    ${lblMarkReached}
-                                </button>
-                            ` : ''}
-                            ${(s.status === 'reached') ? `
-                                <button class="btn btn-sm btn-primary" style="background:var(--success-bg) !important; color:var(--success) !important; border:1px solid var(--success) !important;" onclick="window.ResQDashboard.markPersonSafe('${s.id}')">
-                                    ${lblMarkSafe}
-                                </button>
-                            ` : ''}
+                        <div style="display:flex; flex-direction:column; gap:0.4rem;" onclick="event.stopPropagation();">
+                            <button class="btn btn-sm btn-secondary" style="border-color:var(--info); color:var(--info); font-weight:700;" onclick="window.ResQDashboard.markTeamReached('${s.id}')">
+                                🚑 ${lblMarkReached}
+                            </button>
+                            <button class="btn btn-sm btn-primary" style="background:var(--success-bg) !important; color:var(--success) !important; border:1px solid var(--success) !important; font-weight:800;" onclick="window.ResQDashboard.markPersonSafe('${s.id}')">
+                                🟢 ${lblMarkSafe}
+                            </button>
                             <button class="btn btn-sm btn-primary" style="font-size:0.825rem;" onclick="window.ResQDashboard.openDispatchModal('${s.id}')">
                                 <i data-lucide="navigation" style="width:14px;"></i> ${s.assigned_unit ? lblReassign : lblDispatch}
                             </button>
@@ -822,17 +818,13 @@ class DashboardManager {
                                 🟢 ${this.getLabelTranslation('safeTag')} &bull; ${s.outcome === 'RESCUED_BY_OTHERS' ? lblRescuedByOthers : lblRescuedByResQNet}
                             </div>` :
                             `
-                            <div style="display:flex; flex-direction:column; gap:0.5rem;">
-                                ${(s.status === 'assigned' || s.status === 'dispatched' || s.status === 'en_route') ? `
-                                    <button class="btn btn-secondary" style="border-color:var(--info); color:var(--info); font-size:0.85rem;" onclick="window.ResQDashboard.markTeamReached('${s.id}')">
-                                        ${lblMarkReached}
-                                    </button>
-                                ` : ''}
-                                ${(s.status === 'reached') ? `
-                                    <button class="btn btn-primary" style="background:var(--success-bg) !important; color:var(--success) !important; border:1px solid var(--success) !important; font-size:0.85rem;" onclick="window.ResQDashboard.markPersonSafe('${s.id}')">
-                                        ${lblMarkSafe}
-                                    </button>
-                                ` : ''}
+                            <div style="display:flex; flex-direction:column; gap:0.5rem;" onclick="event.stopPropagation();">
+                                <button class="btn btn-secondary" style="border-color:var(--info); color:var(--info); font-size:0.85rem; font-weight:700;" onclick="window.ResQDashboard.markTeamReached('${s.id}')">
+                                    🚑 ${lblMarkReached}
+                                </button>
+                                <button class="btn btn-primary" style="background:var(--success-bg) !important; color:var(--success) !important; border:1px solid var(--success) !important; font-size:0.85rem; font-weight:800;" onclick="window.ResQDashboard.markPersonSafe('${s.id}')">
+                                    🟢 ${lblMarkSafe}
+                                </button>
                                 <button class="btn btn-primary" style="width:100%; font-size:0.875rem; padding:0.65rem;" onclick="window.ResQDashboard.openDispatchModal('${s.id}')">
                                     <i data-lucide="navigation" style="width:16px;"></i> ${s.assigned_unit ? lblReassign : lblDispatch}
                                 </button>

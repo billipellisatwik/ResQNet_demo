@@ -1,6 +1,37 @@
 {
   "sos": [
     {
+      "id": "RESQ-61C5AACB",
+      "category": "Flood Emergency",
+      "category_icon": "\ud83c\udf0a",
+      "description": "Flood Emergency assistance required urgently.",
+      "people_count": 1,
+      "latitude": 18.641582298970885,
+      "longitude": 79.5466916283754,
+      "accuracy": 8.0,
+      "location_type": "GPS ACCURATE",
+      "phone": "+91 Mobile Client",
+      "citizen_name": "Citizen Mobile",
+      "created_at": "2026-08-19T09:59:31.816910",
+      "status": "pending",
+      "priority": "CRITICAL",
+      "priority_score": 100,
+      "requested_services": [
+        "ALL SERVICES DISPATCHED (Medical + Rescue Boat + Food + Shelter)"
+      ],
+      "is_all_services": true,
+      "urgency_badge": "\ud83d\udea8 CRITICAL: ALL SERVICES DISPATCHED",
+      "assigned_unit": "RU-LOCAL-9C0E5740",
+      "assigned_unit_name": "NDRF Local District Squad (18.64\u00b0N, 79.55\u00b0E) Express Squad",
+      "assigned_unit_distance_km": 0.46,
+      "assigned_unit_eta_mins": 1,
+      "nearest_unit_id": "RU-LOCAL-9C0E5740",
+      "nearest_unit_name": "NDRF Local District Squad (18.64\u00b0N, 79.55\u00b0E) Express Squad",
+      "nearest_unit_distance_km": 0.46,
+      "nearest_unit_eta_mins": 1,
+      "outcome": null
+    },
+    {
       "id": "RESQ-441D337F",
       "category": "Flood Emergency",
       "category_icon": "\ud83c\udf0a",
@@ -13,7 +44,7 @@
       "phone": "+91 Mobile Client",
       "citizen_name": "Citizen Mobile",
       "created_at": "2026-08-19T09:54:05.415885",
-      "status": "pending",
+      "status": "safe",
       "priority": "CRITICAL",
       "priority_score": 100,
       "requested_services": [
@@ -29,7 +60,9 @@
       "nearest_unit_name": "NDRF Local District Squad (18.64\u00b0N, 79.55\u00b0E) Express Squad",
       "nearest_unit_distance_km": 0.46,
       "nearest_unit_eta_mins": 1,
-      "outcome": null
+      "outcome": "RESCUED_BY_RESQNET_TEAM",
+      "team_reached_at": "2026-08-19T09:58:48.828831",
+      "safe_at": "2026-08-19T09:58:51.695773"
     },
     {
       "id": "RESQ-16C9EDD5",
@@ -77,7 +110,7 @@
       "phone": "N/A",
       "citizen_name": "Anonymous Citizen",
       "created_at": "2026-08-19T09:45:26.386696",
-      "status": "pending",
+      "status": "safe",
       "priority": "CRITICAL",
       "priority_score": 100,
       "requested_services": [
@@ -93,7 +126,9 @@
       "nearest_unit_name": "NDRF Delhi NCR Regional Hub",
       "nearest_unit_distance_km": 0.0,
       "nearest_unit_eta_mins": 1,
-      "outcome": null
+      "outcome": "RESCUED_BY_RESQNET_TEAM",
+      "team_reached_at": "2026-08-19T09:59:02.529833",
+      "safe_at": "2026-08-19T09:59:03.358925"
     },
     {
       "id": "RESQ-2885A266",
@@ -261,13 +296,13 @@
       "name": "NDRF Delhi NCR Regional Hub",
       "type": "Rapid Disaster Response Force",
       "icon": "\ud83d\ude91",
-      "status": "available",
+      "status": "dispatched",
       "contact": "+91 11 2345 6789",
       "location": {
         "lat": 28.6315,
         "lng": 77.2167
       },
-      "assigned_incident_id": null
+      "assigned_incident_id": "RESQ-2E054B94"
     },
     {
       "id": "RU-MUMBAI",
@@ -362,6 +397,19 @@
     },
     {
       "id": "RU-LOCAL-C7375466",
+      "name": "NDRF Local District Squad (18.64\u00b0N, 79.55\u00b0E) Express Squad",
+      "type": "Local Rapid Disaster Response Unit",
+      "icon": "\u26a1",
+      "status": "dispatched",
+      "contact": "+91 Local Emergency Line",
+      "location": {
+        "lat": 18.64458,
+        "lng": 79.54969
+      },
+      "assigned_incident_id": "RESQ-441D337F"
+    },
+    {
+      "id": "RU-LOCAL-9C0E5740",
       "name": "NDRF Local District Squad (18.64\u00b0N, 79.55\u00b0E) Express Squad",
       "type": "Local Rapid Disaster Response Unit",
       "icon": "\u26a1",
