@@ -1,18 +1,20 @@
 /* ==========================================================================
-   RESQBOT — INTELLIGENT PLATFORM GUIDANCE & EMERGENCY ASSISTANT v1.0
-   Provides interactive step-by-step guidance, quick help chips, multilingual
-   assistance (English, Telugu, Hindi), and DOM element highlighting.
+   RESQBOT — INTELLIGENT PLATFORM GUIDANCE & EMERGENCY ASSISTANT v1.2
+   Provides interactive step-by-step guidance, quick help chips, dynamic
+   multilingual assistance (English, Telugu, Hindi), and DOM highlighting.
    ========================================================================== */
 
 class ResQBotEngine {
     constructor() {
         this.isOpen = false;
-        this.currentLang = localStorage.getItem('resq-lang') || 'en';
+        this.currentLang = localStorage.getItem('resqnet_lang') || localStorage.getItem('resq-lang') || 'en';
         this.messages = [];
         
         this.knowledgeBase = {
             en: {
                 welcome: "Hello! I am <strong>ResQBot</strong>, your emergency assistant. Need help navigating the platform or sending an SOS?",
+                placeholder: "Ask ResQBot a question...",
+                sendBtn: "Send",
                 quickChips: [
                     { label: "🚨 How to Send SOS", query: "how to send sos" },
                     { label: "📍 Pick Location on Map", query: "how to set location" },
@@ -22,48 +24,58 @@ class ResQBotEngine {
                     { label: "🏠 Shelters & Weather", query: "shelters and weather" }
                 ],
                 responses: {
-                    sos: "<strong>To Send an Emergency SOS Signal:</strong><br>1. Select your emergency type (e.g. 🌊 <i>Flood</i>, 🚑 <i>Medical</i>, 🔥 <i>Fire</i>).<br>2. Optionally type urgent details in the text box.<br>3. Press the <strong>GIANT PULSING 🚨 SOS BUTTON</strong>.<br>4. A 3-second safety countdown confirmation modal will appear. Tap <strong>Confirm</strong> to transmit!",
+                    sos: "<strong>To Send an Emergency SOS Signal:</strong><br>1. Select your emergency category (e.g. 🌊 <i>Flood</i>, 🚑 <i>Medical</i>, 🍲 <i>Food</i>).<br>2. Optionally check needed service boxes.<br>3. Press the <strong>GIANT PULSING 🚨 SOS BUTTON</strong>.<br>4. ⚡ <i>Note: If no service is selected, <strong>ALL SERVICES</strong> (Medical, Boat, Food & Shelter) are sent automatically!</i>",
                     location: "<strong>To Set Your Emergency Location:</strong><br>1. Tap the <strong>📍 Pick on Map</strong> button at the top location header.<br>2. Type any area name or landmark across India (e.g. <i>Banjara Hills, Marine Drive, Connaught Place</i>) for live autocomplete suggestions.<br>3. Or drag the marker pin directly on the map and tap <strong>Set Pinpoint Location</strong>.",
-                    offline: "<strong>Offline Emergency Mode:</strong><br>• If cellular network or internet drops, the app automatically switches to <strong>OFFLINE (QUEUED)</strong> mode.<br>• Pressing SOS saves your emergency securely to your browser's IndexedDB storage.<br>• When network returns, ResQBot will <strong>auto-sync</strong> and upload your emergency signal to Command Center!",
-                    command: "<strong>Command Center Operator Guide:</strong><br>• Open <strong>command-center.html</strong> on the operator laptop.<br>• New citizen emergencies pop up in real-time <strong>without refreshing the page</strong>.<br>• View incidents on the Leaflet Tactical Map.<br>• Click <strong>DISPATCH RESCUE TEAM</strong> on any card to select available units and animate their route line!",
-                    track: "<strong>How to Track Your Rescue Team:</strong><br>• After sending SOS, you are automatically redirected to <strong>tracking.html</strong>.<br>• View real-time status timeline (*Pending → Assigned → En-Route → Resolved*).<br>• See approaching unit distance & estimated time of arrival (ETA).",
-                    shelter: "<strong>Shelters & Weather Risk:</strong><br>• Go to <strong>weather.html</strong> to view real-time Open-Meteo rainfall forecasting.<br>• View nearby safe evacuation shelters calculated using Haversine distance."
+                    offline: "<strong>Offline Emergency Mode:</strong><br>• If cellular network or internet drops, ResQ-Mesh activates automatically.<br>• Your SOS packet hops phone-to-phone via Bluetooth Low Energy (BLE) beacong.<br>• When network returns, ResQBot will <strong>auto-sync</strong> and upload your emergency signal to Command Center!",
+                    command: "<strong>Command Center Operator Guide:</strong><br>• Open <strong>command-center.html</strong> on the operator laptop.<br>• New citizen emergencies pop up in real-time <strong>without refreshing the page</strong>.<br>• View incidents on the Leaflet Tactical Map.<br>• Click 📞 <strong>Call</strong>, 💬 <strong>SMS</strong>, or <strong>DISPATCH RESCUE TEAM</strong> on any card!",
+                    track: "<strong>How to Track Your Rescue Team:</strong><br>• After sending SOS, view real-time status on <strong>tracking.html</strong>.<br>• View real-time status timeline (*Pending → Assigned → En-Route → Resolved*).<br>• See approaching unit distance & estimated time of arrival (ETA: 1-3 MINS MAX).",
+                    shelter: "<strong>Shelters & Weather Risk:</strong><br>• Go to <strong>weather.html</strong> to view real-time Open-Meteo rainfall forecasting.<br>• View recommended high-ground shelters and the glowing green safe evacuation route map."
                 },
                 fallback: "I can guide you on sending SOS signals, pinpointing map locations, offline queueing, or operating the Command Center. Tap one of the quick chips below or type your question!"
             },
             te: {
-                welcome: "నమస్కారం! నేను <strong>ResQBot</strong>, మీ అత్యవసర సహాయక బాట్. ప్లాట్‌ఫారమ్ వాడకం పై సహాయం కావాలా?",
+                welcome: "నమస్కారం! నేను <strong>ResQBot</strong>, మీ అత్యవసర సహాయక అసిస్టెంట్. ప్లాట్‌ఫారమ్ వాడకం పై సహాయం కావాలా?",
+                placeholder: "ResQBot ని ప్రశ్న అడగండి...",
+                sendBtn: "పంపు",
                 quickChips: [
                     { label: "🚨 SOS ఎలా పంపాలి?", query: "how to send sos" },
                     { label: "📍 మ్యాప్‌లో లొకేషన్ ఎంచుకోండి", query: "how to set location" },
                     { label: "📡 ఆఫ్‌లైన్ మోడ్ సమాచారం", query: "offline mode" },
                     { label: "💻 కమాండ్ సెంటర్ మార్గదర్శి", query: "command center" },
-                    { label: "🎯 రెస్క్యూ టీమ్‌ను ట్రాక్ చేయండి", query: "track rescue" }
+                    { label: "🎯 రెస్క్యూ టీమ్‌ను ట్రాక్ చేయండి", query: "track rescue" },
+                    { label: "🏠 పునరావాస కేంద్రాలు & వాతావరణం", query: "shelters and weather" }
                 ],
                 responses: {
-                    sos: "<strong>అత్యవసర SOS సిగ్నల్ పంపడానికి:</strong><br>1. అత్యవసర రకాన్ని ఎంచుకోండి (उदा. 🌊 వరదలు, 🚑 వైద్యం, 🔥 అగ్ని ప్రమాదం).<br>2. పెద్ద ఎరుపు రంగు 🚨 <strong>SOS బటన్</strong> పై నొక్కండి.<br>3. 3-సెకన్ల కౌంట్‌డౌన్ పూర్తయ్యాక <strong>Confirm</strong> చేయండి!",
+                    sos: "<strong>అత్యవసర SOS సిగ్నల్ పంపడానికి:</strong><br>1. మీకు కావలసిన సహాయ రకాన్ని ఎంచుకోండి (🌊 వరదలు, 🚑 వైద్యం, 🍲 ఆహారం, 🚤 పడవ).<br>2. పెద్ద ఎరుపు రంగు 🚨 <strong>SOS బటన్</strong> పై నొక్కండి.<br>3. ⚡ <i>కంగారులో ఏమీ ఎంచుకోకపోయినా, <strong>CRITICAL ALL-SERVICES HELP</strong> (వైద్యం + పడవ + ఆహారం + పునరావాసం) ఆటోమేటిక్‌గా పంపబడుతుంది!</i>",
                     location: "<strong>మీ లొకేషన్ ఎంచుకోవడానికి:</strong><br>1. <strong>📍 Pick on Map</strong> బటన్‌పై నొక్కండి.<br>2. మీ ప్రాంతం పేరు టైప్ చేయండి లేదా మ్యాప్‌లో పిన్ డ్రాగ్ చేసి <strong>Set Pinpoint Location</strong> పై నొక్కండి.",
-                    offline: "<strong>ఆఫ్‌లైన్ ఎమర్జెన్సీ మోడ్:</strong><br>ఇంటర్నెట్ లేనప్పుడు కూడా మీ SOS వివరాలు సురక్షితంగా సేవ్ అవుతాయి. నెట్‌వర్క్ రాగానే కమాండ్ సెంటర్‌కు ఆటో-సింక్ అవుతాయి!",
-                    command: "<strong>కమాండ్ సెంటర్ డ్యాష్‌బోర్డ్:</strong><br>కమాండ్ సెంటర్‌లో కొత్త ఎమర్జెన్సీ కార్డ్‌లు పేజీ రీఫ్రెష్ లేకుండా వెంటనే కనిపిస్తాయి. DISPATCH బటన్ నొక్కి రెస్క్యూ టీమ్‌ను కేటాయించండి."
+                    offline: "<strong>ఆఫ్‌లైన్ ఎమర్జెన్సీ మోడ్:</strong><br>• ఇంటర్నెట్ లేదా సిమ్ లేకపోయినా ResQ-Mesh సహాయంతో మీ SOS బ్లూటూత్ ద్వారా సమీప ఫోన్లకు బదిలీ అవుతుంది.<br>• నెట్‌వర్క్ రాగానే కమాండ్ సెంటర్‌కు ఆటో-అప్‌లోడ్ అవుతుంది!",
+                    command: "<strong>కమాండ్ సెంటర్ మార్గదర్శి:</strong><br>• కమాండ్ సెంటర్‌లో కొత్త ఎమర్జెన్సీ కార్డ్‌లు పేజీ రీఫ్రెష్ లేకుండా వెంటనే కనిపిస్తాయి.<br>• 📞 కాల్ చేయడం, 💬 verification SMS పంపడం మరియు రెస్క్యూ టీమ్‌ను dispatch చేయడం చేయవచ్చు.",
+                    track: "<strong>రెస్క్యూ టీమ్‌ను ట్రాక్ చేయడం:</strong><br>• SOS పంపిన తర్వాత <strong>tracking.html</strong> లో మీ రెస్క్యూ వాహనం లొకేషన్, దూరం మరియు రాక సమయాన్ని (1-3 నిమిషాలు) లైవ్‌లో చూడవచ్చు.",
+                    shelter: "<strong>సురక్షిత పునరావాస కేంద్రాలు & వాతావరణం:</strong><br>• <strong>weather.html</strong> లో వర్షపాతం అంచనాలు మరియు ఆకుపచ్చ రంగు సురక్షిత మార్గాన్ని (Safe Evacuation Route Map) చూడవచ్చు."
                 },
                 fallback: "నేను మీకు SOS పంపడం, లొకేషన్ మార్చడం, ఆఫ్‌లైన్ మోడ్ మరియు కమాండ్ సెంటర్ వాడకం పై మార్గదర్శనం చేయగలను. కింద ఉన్న ఆప్షన్లను ఎంచుకోండి!"
             },
             hi: {
                 welcome: "नमस्ते! मैं <strong>ResQBot</strong> हूँ, आपका आपातकालीन सहायक। प्लेटफार्म का उपयोग करने में मदद चाहिए?",
+                placeholder: "ResQBot से सवाल पूछें...",
+                sendBtn: "भेजें",
                 quickChips: [
                     { label: "🚨 SOS कैसे भेजें?", query: "how to send sos" },
                     { label: "📍 मैप पर लोकेशन चुनें", query: "how to set location" },
-                    { label: "📡 ऑफलाइन मोड जानकारी", query: "offline mode" },
+                    { label: "📡 ऑफ-लाइन मोड जानकारी", query: "offline mode" },
                     { label: "💻 कमांड सेंटर गाइड", query: "command center" },
-                    { label: "🎯 रेस्क्यू टीम ट्रैक करें", query: "track rescue" }
+                    { label: "🎯 रेस्क्यू टीम ट्रैक करें", query: "track rescue" },
+                    { label: "🏠 राहत शिविर और मौसम", query: "shelters and weather" }
                 ],
                 responses: {
-                    sos: "<strong>SOS सिग्नल भेजने के लिए:</strong><br>1. आपातकाल का प्रकार चुनें (जैसे 🌊 बाढ़, 🚑 मेडिकल, 🔥 आग)।<br>2. बड़े लाल 🚨 <strong>SOS बटन</strong> पर क्लिक करें।<br>3. 3-सेकंड काउंटडाउन के बाद <strong>Confirm</strong> करें!",
+                    sos: "<strong>आपातकालीन SOS सिग्नल भेजने के लिए:</strong><br>1. आवश्यक सहायता चुनें (जैसे 🌊 बाढ़, 🚑 मेडिकल, 🍲 भोजन, 🚤 नाव)।<br>2. बड़े लाल 🚨 <strong>SOS बटन</strong> पर क्लिक करें।<br>3. ⚡ <i>यदि कुछ न चुनें, तो <strong>CRITICAL ALL-SERVICES HELP</strong> (मेडिकल + नाव + राशन + शेल्टर) तुरंत भेजी जाएगी!</i>",
                     location: "<strong>अपनी सटीक लोकेशन चुनने के लिए:</strong><br>1. <strong>📍 Pick on Map</strong> बटन पर क्लिक करें।<br>2. भारत का कोई भी इलाका टाइप करें या मैप पर पिन ड्रैग करके <strong>Set Pinpoint Location</strong> दबाएं।",
-                    offline: "<strong>ऑफलाइन आपातकालीन मोड:</strong><br>इंटरनेट न होने पर भी आपका SOS सुरक्षित रूप से सेव हो जाता है और नेटवर्क आते ही कमांड सेंटर में ऑटो-अपलोड हो जाता है!",
-                    command: "<strong>कमांड सेंटर गाइड:</strong><br>कमांड सेंटर लैपटॉप पर बिना पेज रिफ्रेश किए नए आपातकालीन सिग्नल दिखाई देते हैं। DISPATCH दबाकर रेस्क्यू टीम भेजें।"
+                    offline: "<strong>ऑफ-लाइन आपातकालीन मोड:</strong><br>• बिना इंटरनेट या सिम के भी Bluetooth मेश तकनीक द्वारा आपका मैसेज पास के फोन तक पहुंचता है।<br>• नेटवर्क आते ही कमांड सेंटर में ऑटो-अपलोड हो जाता है!",
+                    command: "<strong>कमांड सेंटर गाइड:</strong><br>• कमांड सेंटर लैपटॉप पर बिना पेज रिफ्रेश किए नए आपातकालीन सिग्नल दिखाई देते हैं।<br>• 📞 कॉल, 💬 सत्यापन SMS और रेस्क्यू टीम तैनात करें।",
+                    track: "<strong>रेस्क्यू टीम ट्रैक करें:</strong><br>• SOS भेजने के बाद <strong>tracking.html</strong> पर रेस्क्यू वाहन की लाइव दूरी और आगमन समय (1-3 मिनट) देखें।",
+                    shelter: "<strong>सुरक्षित स्थान और मौसम:</strong><br>• <strong>weather.html</strong> पर वर्षा पूर्वानुमान और सुरक्षित मार्ग (Safe Route Map) देखें।"
                 },
-                fallback: "मैं SOS भेजने, मैप लोकेशन चुनने, ऑफलाइन मोड और कमांड सेंटर के उपयोग में आपकी सहायता कर सकता हूँ। नीचे दिए गए विकल्पों पर क्लिक करें!"
+                fallback: "मैं SOS भेजने, मैप लोकेशन चुनने, ऑफ-लाइन मोड और कमांड सेंटर के उपयोग में आपकी सहायता कर सकता हूँ। नीचे दिए गए विकल्पों पर क्लिक करें!"
             }
         };
 
@@ -78,7 +90,7 @@ class ResQBotEngine {
         }
 
         window.addEventListener('language-changed', (e) => {
-            this.currentLang = e.detail || 'en';
+            this.currentLang = e.detail || localStorage.getItem('resqnet_lang') || 'en';
             this.updateBotLanguage();
         });
     }
@@ -331,7 +343,6 @@ class ResQBotEngine {
                 border-color: var(--primary);
             }
 
-            /* Highlight Pulse Effect for Target UI Elements */
             .resqbot-target-highlight {
                 animation: resqbot-element-glow 2s infinite alternate !important;
             }
@@ -429,21 +440,21 @@ class ResQBotEngine {
         const langData = this.knowledgeBase[this.currentLang] || this.knowledgeBase.en;
         const resp = langData.responses;
 
-        if (q.includes('sos') || q.includes('help') || q.includes('emergency') || q.includes('send') || q.includes('press')) {
+        if (q.includes('sos') || q.includes('help') || q.includes('emergency') || q.includes('send') || q.includes('press') || q.includes('సహాయం') || q.includes('మదద్')) {
             this.addBotMessage(resp.sos || resp.fallback);
             this.highlightElement('#mainSosBtn');
-        } else if (q.includes('loc') || q.includes('map') || q.includes('pin') || q.includes('place') || q.includes('area')) {
+        } else if (q.includes('loc') || q.includes('map') || q.includes('pin') || q.includes('place') || q.includes('area') || q.includes('లొకేషన్') || q.includes('स्थान')) {
             this.addBotMessage(resp.location || resp.fallback);
             this.highlightElement('#manualMapPickerBtn');
             this.highlightElement('#changeLocBtn');
-        } else if (q.includes('off') || q.includes('net') || q.includes('sync')) {
+        } else if (q.includes('off') || q.includes('net') || q.includes('sync') || q.includes('ఆఫ్‌లైన్') || q.includes('ऑफलाइन')) {
             this.addBotMessage(resp.offline || resp.fallback);
             this.highlightElement('#network-badge');
-        } else if (q.includes('command') || q.includes('eoc') || q.includes('dispatch') || q.includes('laptop')) {
+        } else if (q.includes('command') || q.includes('eoc') || q.includes('dispatch') || q.includes('laptop') || q.includes('కమాండ్') || q.includes('कमांड')) {
             this.addBotMessage(resp.command || resp.fallback);
-        } else if (q.includes('track') || q.includes('eta') || q.includes('route')) {
+        } else if (q.includes('track') || q.includes('eta') || q.includes('route') || q.includes('ట్రాక్') || q.includes('ट्रैक')) {
             this.addBotMessage(resp.track || resp.fallback);
-        } else if (q.includes('shelter') || q.includes('weather') || q.includes('rain')) {
+        } else if (q.includes('shelter') || q.includes('weather') || q.includes('rain') || q.includes('పునరావాస') || q.includes('मौसम')) {
             this.addBotMessage(resp.shelter || resp.fallback);
         } else {
             this.addBotMessage(langData.fallback);
@@ -464,6 +475,12 @@ class ResQBotEngine {
 
     updateBotLanguage() {
         const langData = this.knowledgeBase[this.currentLang] || this.knowledgeBase.en;
+        
+        const input = document.getElementById('resqbot-input');
+        const sendBtn = document.getElementById('resqbot-send-btn');
+        if (input && langData.placeholder) input.placeholder = langData.placeholder;
+        if (sendBtn && langData.sendBtn) sendBtn.innerText = langData.sendBtn;
+
         this.renderQuickChips();
         this.addBotMessage(langData.welcome);
     }
