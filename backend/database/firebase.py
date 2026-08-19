@@ -15,42 +15,7 @@ else:
 
 # Initial Seed Data with Regional Multi-Hub Rescue Units across major locations
 DEFAULT_DB = {
-    "sos": [
-        {
-            "id": "RESQ-1042",
-            "category": "Flood Emergency",
-            "category_icon": "🌊",
-            "priority": "CRITICAL",
-            "priority_score": 9,
-            "status": "pending",
-            "description": "Four family members trapped on roof due to fast rising flood waters",
-            "citizen_name": "Ramesh Kumar",
-            "phone": "+91 98765 43210",
-            "latitude": 17.3850,
-            "longitude": 78.4867,
-            "accuracy": 12.0,
-            "location_type": "GPS ACCURATE",
-            "timestamp": "2026-08-18T10:00:00Z",
-            "assigned_unit": None
-        },
-        {
-            "id": "RESQ-1043",
-            "category": "Medical Emergency",
-            "category_icon": "🚑",
-            "priority": "CRITICAL",
-            "priority_score": 8,
-            "status": "assigned",
-            "description": "Elderly patient having acute respiratory distress, needs oxygen immediately",
-            "citizen_name": "Priya Sharma",
-            "phone": "+91 98123 45678",
-            "latitude": 17.4000,
-            "longitude": 78.5000,
-            "accuracy": 15.0,
-            "location_type": "GPS ACCURATE",
-            "timestamp": "2026-08-18T10:05:00Z",
-            "assigned_unit": "RU-002"
-        }
-    ],
+    "sos": [],
     "incidents": [
         {"id": "INC-001", "type": "Flood", "severity": "high", "status": "active", "location": {"lat": 17.385, "lng": 78.4867}}
     ],
