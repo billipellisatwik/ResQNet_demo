@@ -265,6 +265,17 @@ class MapManager {
         this.layers.zones.addLayer(polygon);
     }
 
+    /**
+     * Smoothly animate and center map on specific SOS coordinates
+     */
+    focusSOSLocation(lat, lng, zoom = 15) {
+        if (!this.map) return;
+        this.map.flyTo([lat, lng], zoom, {
+            animate: true,
+            duration: 1.2
+        });
+    }
+
     clearAll() {
         if (!this.map) return;
         Object.values(this.layers).forEach(layer => layer && layer.clearLayers());

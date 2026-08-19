@@ -529,8 +529,36 @@ class DashboardManager {
 
     plotSOSOnMap(records, targetMapManager) {
         const mapMgr = targetMapManager || this.mapManager;
-        if (!mapMgr) return;
-        records.forEach(r => mapMgr.addSOSMarker(r));
+        if (!mapMgr || !mapMgr.map) return;
+
+        mapMgr.layers.sos.clearLayers();
+        mapMgr.layers.risk.clearLayers();
+
+        const latLngs = [];
+        records.forEach(r => {
+            mapMgr.addSOSMarker(r);
+            if (r.latitude && r.longitude) {
+                latLngs.push([r.latitude, r.longitude]);
+            }
+        });
+
+        if (latLngs.length > 1) {
+            mapMgr.map.fitBounds(L.latLngBounds(latLngs), { padding: [40, 40], maxZoom: 15 });
+        } else if (latLngs.length === 1) {
+            mapMgr.map.setView(latLngs[0], 14);
+        }
+    }
+
+    focusSOSOnMap(sosId, lat, lng) {
+        if (this.mapManager) {
+            this.mapManager.focusSOSLocation(lat, lng, 15);
+        }
+        if (this.fullMapManager) {
+            this.fullMapManager.focusSOSLocation(lat, lng, 15);
+        }
+        if (window.ResQNotifications) {
+            window.ResQNotifications.showToast(`📍 Focused Tactical Map on ${sosId}`, 'info');
+        }
     }
 
     plotUnitsOnMap(units, targetMapManager) {
@@ -619,7 +647,7 @@ class DashboardManager {
             ` : '';
 
             return `
-                <div class="glass-panel sos-feed-card" style="padding:1.15rem; margin-bottom:0.85rem; border-left:4px solid var(--${priorityClass});">
+                <div class="glass-panel sos-feed-card" style="padding:1.15rem; margin-bottom:0.85rem; border-left:4px solid var(--${priorityClass}); cursor:pointer;" onclick="window.ResQDashboard.focusSOSOnMap('${s.id}', ${s.latitude}, ${s.longitude})">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
                         <div>
                             <span class="badge-tag" style="background:var(--${priorityClass}-bg); color:var(--${priorityClass}); border:1px solid var(--${priorityClass}); font-weight:800;">${priorityText}</span>
