@@ -1,5 +1,196 @@
 {
-  "sos": [],
+  "sos": [
+    {
+      "id": "RESQ-441D337F",
+      "category": "Flood Emergency",
+      "category_icon": "\ud83c\udf0a",
+      "description": "Flood Emergency assistance required urgently.",
+      "people_count": 1,
+      "latitude": 18.641582298970885,
+      "longitude": 79.5466916283754,
+      "accuracy": 8.0,
+      "location_type": "GPS ACCURATE",
+      "phone": "+91 Mobile Client",
+      "citizen_name": "Citizen Mobile",
+      "created_at": "2026-08-19T09:54:05.415885",
+      "status": "pending",
+      "priority": "CRITICAL",
+      "priority_score": 100,
+      "requested_services": [
+        "ALL SERVICES DISPATCHED (Medical + Rescue Boat + Food + Shelter)"
+      ],
+      "is_all_services": true,
+      "urgency_badge": "\ud83d\udea8 CRITICAL: ALL SERVICES DISPATCHED",
+      "assigned_unit": "RU-LOCAL-C7375466",
+      "assigned_unit_name": "NDRF Local District Squad (18.64\u00b0N, 79.55\u00b0E) Express Squad",
+      "assigned_unit_distance_km": 0.46,
+      "assigned_unit_eta_mins": 1,
+      "nearest_unit_id": "RU-LOCAL-C7375466",
+      "nearest_unit_name": "NDRF Local District Squad (18.64\u00b0N, 79.55\u00b0E) Express Squad",
+      "nearest_unit_distance_km": 0.46,
+      "nearest_unit_eta_mins": 1,
+      "outcome": null
+    },
+    {
+      "id": "RESQ-16C9EDD5",
+      "category": "Fire Emergency",
+      "category_icon": "\ud83d\udd25",
+      "description": "Fire Emergency assistance required urgently.",
+      "people_count": 1,
+      "latitude": 18.641582298970885,
+      "longitude": 79.5466916283754,
+      "accuracy": 8.0,
+      "location_type": "GPS ACCURATE",
+      "phone": "+91 Mobile Client",
+      "citizen_name": "Citizen Mobile",
+      "created_at": "2026-08-19T09:48:39.684383",
+      "status": "safe",
+      "priority": "CRITICAL",
+      "priority_score": 100,
+      "requested_services": [
+        "ALL SERVICES DISPATCHED (Medical + Rescue Boat + Food + Shelter)"
+      ],
+      "is_all_services": true,
+      "urgency_badge": "\ud83d\udea8 CRITICAL: ALL SERVICES DISPATCHED",
+      "assigned_unit": "RU-RAPID-0D195BBD",
+      "assigned_unit_name": "NDRF Rapid Express Unit (RU-RAPID-0D195BBD)",
+      "assigned_unit_distance_km": 0.59,
+      "assigned_unit_eta_mins": 1,
+      "nearest_unit_id": "RU-RAPID-0D195BBD",
+      "nearest_unit_name": "NDRF Rapid Express Unit (RU-RAPID-0D195BBD)",
+      "nearest_unit_distance_km": 0.59,
+      "nearest_unit_eta_mins": 1,
+      "outcome": "RESCUED_BY_RESQNET_TEAM",
+      "team_reached_at": "2026-08-19T09:49:52.378607",
+      "safe_at": "2026-08-19T09:50:11.642354"
+    },
+    {
+      "id": "RESQ-2E054B94",
+      "category": "Flood Emergency",
+      "category_icon": "\ud83d\udea8",
+      "description": "Emergency SOS",
+      "people_count": 1,
+      "latitude": 28.6315,
+      "longitude": 77.2167,
+      "accuracy": 8.0,
+      "location_type": "GPS ACCURATE",
+      "phone": "N/A",
+      "citizen_name": "Anonymous Citizen",
+      "created_at": "2026-08-19T09:45:26.386696",
+      "status": "pending",
+      "priority": "CRITICAL",
+      "priority_score": 100,
+      "requested_services": [
+        "ALL SERVICES DISPATCHED (Medical + Rescue Boat + Food + Shelter)"
+      ],
+      "is_all_services": true,
+      "urgency_badge": "\ud83d\udea8 CRITICAL: ALL SERVICES DISPATCHED",
+      "assigned_unit": "RU-DELHI",
+      "assigned_unit_name": "NDRF Delhi NCR Regional Hub",
+      "assigned_unit_distance_km": 0.0,
+      "assigned_unit_eta_mins": 1,
+      "nearest_unit_id": "RU-DELHI",
+      "nearest_unit_name": "NDRF Delhi NCR Regional Hub",
+      "nearest_unit_distance_km": 0.0,
+      "nearest_unit_eta_mins": 1,
+      "outcome": null
+    },
+    {
+      "id": "RESQ-2885A266",
+      "category": "Flood Emergency",
+      "category_icon": "\ud83d\udea8",
+      "description": "Emergency SOS",
+      "people_count": 1,
+      "latitude": 16.5062,
+      "longitude": 80.648,
+      "accuracy": 8.0,
+      "location_type": "GPS ACCURATE",
+      "phone": "N/A",
+      "citizen_name": "Anonymous Citizen",
+      "created_at": "2026-08-19T09:45:24.349043",
+      "status": "pending",
+      "priority": "CRITICAL",
+      "priority_score": 100,
+      "requested_services": [
+        "ALL SERVICES DISPATCHED (Medical + Rescue Boat + Food + Shelter)"
+      ],
+      "is_all_services": true,
+      "urgency_badge": "\ud83d\udea8 CRITICAL: ALL SERVICES DISPATCHED",
+      "assigned_unit": "RU-LOCAL-B1382FF4",
+      "assigned_unit_name": "NDRF Vijayawada Regional Express Squad",
+      "assigned_unit_distance_km": 0.46,
+      "assigned_unit_eta_mins": 1,
+      "nearest_unit_id": "RU-LOCAL-B1382FF4",
+      "nearest_unit_name": "NDRF Vijayawada Regional Express Squad",
+      "nearest_unit_distance_km": 0.46,
+      "nearest_unit_eta_mins": 1,
+      "outcome": null
+    },
+    {
+      "id": "RESQ-226A0E5E",
+      "category": "Flood Emergency",
+      "category_icon": "\ud83d\udea8",
+      "description": "Emergency SOS",
+      "people_count": 1,
+      "latitude": 17.6868,
+      "longitude": 83.2185,
+      "accuracy": 8.0,
+      "location_type": "GPS ACCURATE",
+      "phone": "N/A",
+      "citizen_name": "Anonymous Citizen",
+      "created_at": "2026-08-19T09:45:22.288621",
+      "status": "pending",
+      "priority": "CRITICAL",
+      "priority_score": 100,
+      "requested_services": [
+        "ALL SERVICES DISPATCHED (Medical + Rescue Boat + Food + Shelter)"
+      ],
+      "is_all_services": true,
+      "urgency_badge": "\ud83d\udea8 CRITICAL: ALL SERVICES DISPATCHED",
+      "assigned_unit": "RU-LOCAL-C952C9AF",
+      "assigned_unit_name": "NDRF Visakhapatnam Coastal Express Squad",
+      "assigned_unit_distance_km": 0.46,
+      "assigned_unit_eta_mins": 1,
+      "nearest_unit_id": "RU-LOCAL-C952C9AF",
+      "nearest_unit_name": "NDRF Visakhapatnam Coastal Express Squad",
+      "nearest_unit_distance_km": 0.46,
+      "nearest_unit_eta_mins": 1,
+      "outcome": null
+    },
+    {
+      "id": "RESQ-FB95FAAA",
+      "category": "Fire Emergency",
+      "category_icon": "\ud83d\udd25",
+      "description": "Fire Emergency assistance required urgently.",
+      "people_count": 1,
+      "latitude": 18.637226576105142,
+      "longitude": 79.54723960089024,
+      "accuracy": 8.0,
+      "location_type": "GPS ACCURATE",
+      "phone": "+91 Mobile Client",
+      "citizen_name": "Citizen Mobile",
+      "created_at": "2026-08-19T09:39:37.703866",
+      "status": "safe",
+      "priority": "CRITICAL",
+      "priority_score": 100,
+      "requested_services": [
+        "ALL SERVICES DISPATCHED (Medical + Rescue Boat + Food + Shelter)"
+      ],
+      "is_all_services": true,
+      "urgency_badge": "\ud83d\udea8 CRITICAL: ALL SERVICES DISPATCHED",
+      "assigned_unit": "RU-002",
+      "assigned_unit_name": "NDRF Rapid Express Unit (RU-RAPID-0D195BBD)",
+      "assigned_unit_distance_km": 0.69,
+      "assigned_unit_eta_mins": 1,
+      "nearest_unit_id": "RU-RAPID-0D195BBD",
+      "nearest_unit_name": "NDRF Rapid Express Unit (RU-RAPID-0D195BBD)",
+      "nearest_unit_distance_km": 0.69,
+      "nearest_unit_eta_mins": 1,
+      "outcome": "RESCUED_BY_RESQNET_TEAM",
+      "team_reached_at": "2026-08-19T09:40:19.547991",
+      "safe_at": "2026-08-19T09:40:24.178944"
+    }
+  ],
   "incidents": [
     {
       "id": "INC-001",
@@ -17,7 +208,7 @@
       "id": "RU-001",
       "name": "Team Alpha (Hyderabad Central Base)",
       "type": "Flood Rescue & Boat Unit",
-      "icon": "🚤",
+      "icon": "\ud83d\udea4",
       "status": "available",
       "contact": "+91 90000 11111",
       "location": {
@@ -30,20 +221,20 @@
       "id": "RU-002",
       "name": "Team Beta (Secunderabad Hub)",
       "type": "Emergency Medical Corps",
-      "icon": "🚑",
-      "status": "available",
+      "icon": "\ud83d\ude91",
+      "status": "dispatched",
       "contact": "+91 90000 22222",
       "location": {
         "lat": 17.4,
         "lng": 78.5
       },
-      "assigned_incident_id": null
+      "assigned_incident_id": "RESQ-FB95FAAA"
     },
     {
       "id": "RU-003",
       "name": "Team Gamma (Hitec City Station)",
       "type": "Fire & Extrication Unit",
-      "icon": "🚒",
+      "icon": "\ud83d\ude92",
       "status": "available",
       "contact": "+91 90000 33333",
       "location": {
@@ -56,7 +247,7 @@
       "id": "RU-004",
       "name": "Team Delta (Cyberabad Rescue Squad)",
       "type": "Heavy Rescue & Collapse Squad",
-      "icon": "🏗️",
+      "icon": "\ud83c\udfd7\ufe0f",
       "status": "available",
       "contact": "+91 90000 44444",
       "location": {
@@ -69,7 +260,7 @@
       "id": "RU-DELHI",
       "name": "NDRF Delhi NCR Regional Hub",
       "type": "Rapid Disaster Response Force",
-      "icon": "🚑",
+      "icon": "\ud83d\ude91",
       "status": "available",
       "contact": "+91 11 2345 6789",
       "location": {
@@ -82,7 +273,7 @@
       "id": "RU-MUMBAI",
       "name": "SDRF Mumbai Coastal & Disaster Unit",
       "type": "Flood & Marine Extrication Squad",
-      "icon": "🚤",
+      "icon": "\ud83d\udea4",
       "status": "available",
       "contact": "+91 22 2200 1122",
       "location": {
@@ -95,7 +286,7 @@
       "id": "RU-BLR",
       "name": "Karnataka Emergency Fire & Rescue Base",
       "type": "Urban Evacuation Squad",
-      "icon": "🚒",
+      "icon": "\ud83d\ude92",
       "status": "available",
       "contact": "+91 80 2297 1500",
       "location": {
@@ -108,7 +299,7 @@
       "id": "RU-KOL",
       "name": "West Bengal SDRF Eastern Hub",
       "type": "Cyclone & Flood Response Unit",
-      "icon": "🚤",
+      "icon": "\ud83d\udea4",
       "status": "available",
       "contact": "+91 33 2214 5400",
       "location": {
@@ -121,12 +312,64 @@
       "id": "RU-CHE",
       "name": "Tamil Nadu Coastal Emergency Station",
       "type": "Medical & Water Rescue Corps",
-      "icon": "🚑",
+      "icon": "\ud83d\ude91",
       "status": "available",
       "contact": "+91 44 2844 7788",
       "location": {
         "lat": 13.0418,
         "lng": 80.2341
+      },
+      "assigned_incident_id": null
+    },
+    {
+      "id": "RU-RAPID-0D195BBD",
+      "name": "NDRF Rapid Express Unit (RU-RAPID-0D195BBD)",
+      "type": "Ultra-Fast Emergency Response Team",
+      "icon": "\u26a1",
+      "status": "dispatched",
+      "contact": "+91 Rapid EOC Line",
+      "location": {
+        "lat": 18.64123,
+        "lng": 79.55224
+      },
+      "assigned_incident_id": "RESQ-16C9EDD5"
+    },
+    {
+      "id": "RU-LOCAL-C952C9AF",
+      "name": "NDRF Visakhapatnam Coastal Express Squad",
+      "type": "Local Rapid Disaster Response Unit",
+      "icon": "\u26a1",
+      "status": "available",
+      "contact": "+91 Local Emergency Line",
+      "location": {
+        "lat": 17.6898,
+        "lng": 83.2215
+      },
+      "assigned_incident_id": null
+    },
+    {
+      "id": "RU-LOCAL-B1382FF4",
+      "name": "NDRF Vijayawada Regional Express Squad",
+      "type": "Local Rapid Disaster Response Unit",
+      "icon": "\u26a1",
+      "status": "available",
+      "contact": "+91 Local Emergency Line",
+      "location": {
+        "lat": 16.5092,
+        "lng": 80.651
+      },
+      "assigned_incident_id": null
+    },
+    {
+      "id": "RU-LOCAL-C7375466",
+      "name": "NDRF Local District Squad (18.64\u00b0N, 79.55\u00b0E) Express Squad",
+      "type": "Local Rapid Disaster Response Unit",
+      "icon": "\u26a1",
+      "status": "available",
+      "contact": "+91 Local Emergency Line",
+      "location": {
+        "lat": 18.64458,
+        "lng": 79.54969
       },
       "assigned_incident_id": null
     }
