@@ -5,7 +5,13 @@ from config import settings
 
 logger = logging.getLogger(__name__)
 
-DB_FILE = os.path.join(os.path.dirname(__file__), "db.json")
+import tempfile
+
+# Use writable /tmp directory on Vercel/cloud serverless runtimes
+if os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"):
+    DB_FILE = os.path.join(tempfile.gettempdir(), "resqnet_db.json")
+else:
+    DB_FILE = os.path.join(os.path.dirname(__file__), "db.json")
 
 # Initial Seed Data with Regional Multi-Hub Rescue Units across major locations
 DEFAULT_DB = {
