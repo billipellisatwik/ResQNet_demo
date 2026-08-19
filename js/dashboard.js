@@ -551,13 +551,19 @@ class DashboardManager {
 
     focusSOSOnMap(sosId, lat, lng) {
         if (this.mapManager) {
-            this.mapManager.focusSOSLocation(lat, lng, 15);
+            this.mapManager.focusSOSLocation(sosId, lat, lng, 17);
         }
         if (this.fullMapManager) {
-            this.fullMapManager.focusSOSLocation(lat, lng, 15);
+            this.fullMapManager.focusSOSLocation(sosId, lat, lng, 17);
         }
+
+        const mapElem = document.getElementById('main-map') || document.getElementById('full-map');
+        if (mapElem) {
+            mapElem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
         if (window.ResQNotifications) {
-            window.ResQNotifications.showToast(`📍 Focused Tactical Map on ${sosId}`, 'info');
+            window.ResQNotifications.showToast(`🔍 Zoomed Close-up on ${sosId}`, 'info');
         }
     }
 

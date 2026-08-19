@@ -1,5 +1,5 @@
 /**
- * ResQNet GIS Map Manager v2.0
+ * ResQNet GIS Map Manager v2.2
  * High-performance Leaflet integration with Dark Glassmorphic styling,
  * animated radar markers, custom popups, polyline routes, clusters, heatmap, and risk overlays.
  */
@@ -21,6 +21,7 @@ class MapManager {
             routes: null
         };
         this.unitMarkers = {};
+        this.sosMarkers = {};
         
         if (document.getElementById(containerId)) {
             this.init();
@@ -142,6 +143,7 @@ class MapManager {
 
         const marker = L.marker([data.latitude, data.longitude], { icon: customIcon }).bindPopup(popupContent);
         this.layers.sos.addLayer(marker);
+        this.sosMarkers[data.id] = marker;
 
         if (isCritical) {
             // Add geographic risk circle
@@ -266,14 +268,21 @@ class MapManager {
     }
 
     /**
-     * Smoothly animate and center map on specific SOS coordinates
+     * Smoothly animate, zoom in close-up (level 17), and open popup on specific SOS coordinates
      */
-    focusSOSLocation(lat, lng, zoom = 15) {
+    focusSOSLocation(sosId, lat, lng, zoom = 17) {
         if (!this.map) return;
-        this.map.flyTo([lat, lng], zoom, {
+        this.map.setView([lat, lng], zoom, {
             animate: true,
-            duration: 1.2
+            duration: 1.0
         });
+        if (sosId && this.sosMarkers[sosId]) {
+            setTimeout(() => {
+                if (this.sosMarkers[sosId]) {
+                    this.sosMarkers[sosId].openPopup();
+                }
+            }, 350);
+        }
     }
 
     clearAll() {
