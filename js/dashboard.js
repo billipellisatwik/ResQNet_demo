@@ -27,6 +27,9 @@ class DashboardManager {
         this.bindSearchFilter();
         this.bindSosTabFilters();
 
+        // 3-Second Automatic Background Sync for Multi-Device Cloud Hosting (Vercel)
+        setInterval(() => this.loadInitialData(), 3000);
+
         // Listen for site-wide language changes
         window.addEventListener('language-changed', (e) => {
             console.log('🌐 Command Center switching language to:', e.detail);
