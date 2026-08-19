@@ -550,21 +550,30 @@ class DashboardManager {
     }
 
     focusSOSOnMap(sosId, lat, lng) {
-        if (this.mapManager) {
-            this.mapManager.focusSOSLocation(sosId, lat, lng, 17);
-        }
-        if (this.fullMapManager) {
-            this.fullMapManager.focusSOSLocation(sosId, lat, lng, 17);
+        // Auto-switch to Overview or Live Map tab if on another view
+        if (this.activeView !== 'overview' && this.activeView !== 'live-map') {
+            this.switchView('overview');
         }
 
-        const mapElem = document.getElementById('main-map') || document.getElementById('full-map');
-        if (mapElem) {
-            mapElem.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
+        setTimeout(() => {
+            if (this.mapManager && this.mapManager.map) {
+                this.mapManager.map.invalidateSize();
+                this.mapManager.focusSOSLocation(sosId, lat, lng, 17);
+            }
+            if (this.fullMapManager && this.fullMapManager.map) {
+                this.fullMapManager.map.invalidateSize();
+                this.fullMapManager.focusSOSLocation(sosId, lat, lng, 17);
+            }
 
-        if (window.ResQNotifications) {
-            window.ResQNotifications.showToast(`🔍 Zoomed Close-up on ${sosId}`, 'info');
-        }
+            const activeMap = (this.activeView === 'live-map') ? document.getElementById('full-map') : document.getElementById('main-map');
+            if (activeMap) {
+                activeMap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            if (window.ResQNotifications) {
+                window.ResQNotifications.showToast(`🔍 Zoomed Close-up (Level 17) on ${sosId}`, 'info');
+            }
+        }, 150);
     }
 
     plotUnitsOnMap(units, targetMapManager) {
