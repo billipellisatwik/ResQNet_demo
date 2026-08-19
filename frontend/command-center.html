@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResQNet Command Center — Emergency Operations</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/map.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/accessibility.css">
+</head>
+<body>
+
+  <!-- Toast Container -->
+  <div id="notification-container"></div>
+
+  <!-- Top Navigation Header -->
+  <nav class="navbar">
+    <a href="/index.html" class="nav-brand">
+      <img src="/assets/logo.svg" alt="ResQNet Logo" class="nav-logo-icon">
+      <span class="text-gradient-danger">ResQNet</span>
+      <span style="font-size:0.75rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.08em; margin-left:0.5rem;" data-i18n="nav.commandCenter">COMMAND EOC</span>
+    </a>
+    
+    <div style="display:flex; align-items:center; gap:1.25rem;">
+      <!-- Simulation Controls Bar -->
+      <div class="sim-controls-card">
+        <span style="font-size:0.775rem; font-weight:800; color:var(--warning); text-transform:uppercase; letter-spacing:0.06em;" data-i18n="dashboard.simulation">SIMULATION:</span>
+        <button class="btn btn-secondary btn-sm" id="startSimBtn" style="padding:0.35rem 0.75rem; font-size:0.8rem;">
+          <i data-lucide="play" style="width:14px;"></i> Flood Sim
+        </button>
+        <button class="btn btn-secondary btn-sm" id="stopSimBtn" style="padding:0.35rem 0.75rem; font-size:0.8rem;">
+          <i data-lucide="square" style="width:14px;"></i> Reset
+        </button>
+      </div>
+
+      <select id="langSelect" class="btn btn-secondary" style="padding: 0.35rem 0.65rem;" aria-label="Select Language">
+        <option value="en">🇬🇧 EN</option>
+        <option value="te">🇮🇳 TE</option>
+        <option value="hi">🇮🇳 HI</option>
+      </select>
+
+      <select id="themeSelect" class="btn btn-secondary" style="padding: 0.35rem 0.55rem;" aria-label="Select Theme">
+        <option value="dark">🌌 Cyber Dark</option>
+        <option value="light">☀️ Clean Light</option>
+        <option value="tactical">☣️ Tactical</option>
+        <option value="crimson">🌋 Crimson</option>
+        <option value="oceanic">🌊 Oceanic</option>
+      </select>
+
+      <div style="display:flex; align-items:center; gap:0.5rem;">
+        <span class="live-dot green"></span>
+        <span style="font-size:0.825rem; font-weight:700;">EOC ONLINE</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Dashboard Layout -->
+  <div class="dashboard-layout">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="dashboard-sidebar">
+      <div class="sidebar-heading" data-i18n="nav.commandCenter">OPERATIONS CENTER</div>
+      
+      <a href="#overview" class="sidebar-nav-item active" data-section="overview">
+        <i data-lucide="layout-dashboard"></i> <span data-i18n="dashboard.overview">Overview</span>
+      </a>
+
+      <a href="#live-sos" class="sidebar-nav-item" data-section="live-sos">
+        <i data-lucide="alert-triangle"></i> <span data-i18n="dashboard.liveSOS">Live SOS</span>
+        <span class="badge-count" id="sidebar-sos-count">0</span>
+      </a>
+
+      <a href="#live-map" class="sidebar-nav-item" data-section="live-map">
+        <i data-lucide="map"></i> <span data-i18n="dashboard.liveMap">Live GIS Map</span>
+      </a>
+
+      <a href="/weather.html" class="sidebar-nav-item">
+        <i data-lucide="cloud-rain"></i> <span data-i18n="dashboard.weather">Weather Intel</span>
+      </a>
+
+      <a href="/rescue-team.html" class="sidebar-nav-item">
+        <i data-lucide="truck"></i> <span data-i18n="dashboard.rescueUnits">Rescue Units</span>
+      </a>
+
+      <a href="/shelters.html" class="sidebar-nav-item">
+        <i data-lucide="home"></i> <span data-i18n="dashboard.shelters">Shelters</span>
+      </a>
+
+      <a href="/resources.html" class="sidebar-nav-item">
+        <i data-lucide="package"></i> <span data-i18n="dashboard.resources">Resources</span>
+      </a>
+
+      <a href="/analytics.html" class="sidebar-nav-item">
+        <i data-lucide="bar-chart-2"></i> <span data-i18n="dashboard.analytics">Analytics</span>
+      </a>
+    </aside>
+
+    <!-- Workspace Area -->
+    <main class="dashboard-workspace">
+      
+      <!-- Top Stat Cards Bar (Visible Across Views) -->
+      <div class="eoc-stats-grid">
+        <div class="stat-card glass-panel">
+          <div class="stat-icon-wrapper stat-icon-danger">🚨</div>
+          <div>
+            <div class="stat-value text-gradient-danger" id="stat-active-sos">12</div>
+            <div class="stat-label" data-i18n="dashboard.activeSOS">Active SOS</div>
+          </div>
+        </div>
+
+        <div class="stat-card glass-panel">
+          <div class="stat-icon-wrapper stat-icon-warning">⚠️</div>
+          <div>
+            <div class="stat-value" id="stat-critical-sos" style="color:var(--warning);">4</div>
+            <div class="stat-label" data-i18n="dashboard.criticalSOS">Critical Priority</div>
+          </div>
+        </div>
+
+        <div class="stat-card glass-panel">
+          <div class="stat-icon-wrapper stat-icon-primary">🚑</div>
+          <div>
+            <div class="stat-value text-gradient-primary" id="stat-units">8</div>
+            <div class="stat-label" data-i18n="dashboard.dispatchedUnits">Dispatched Teams</div>
+          </div>
+        </div>
+
+        <div class="stat-card glass-panel">
+          <div class="stat-icon-wrapper stat-icon-success">🏠</div>
+          <div>
+            <div class="stat-value text-gradient-cyan" id="stat-shelters">14</div>
+            <div class="stat-label" data-i18n="dashboard.sheltersAvail">Shelters Available</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 1: OVERVIEW — TACTICAL MAP & EOC SUMMARY -->
+      <div id="view-overview" class="eoc-view-panel">
+        <div class="ops-split-grid">
+          <!-- Leaflet Tactical GIS Map Container -->
+          <div class="map-container-wrapper glass-panel" style="min-height: 480px;">
+            <div id="main-map" style="width:100%; height:100%; min-height:480px;"></div>
+          </div>
+
+          <!-- Live SOS Emergency Queue Panel -->
+          <div class="glass-panel sos-table-panel" style="padding:1.25rem;">
+            <div class="table-header-controls">
+              <h3 style="font-size:1.05rem; font-weight:800;" data-i18n="dashboard.liveSOS">Live Emergency Queue</h3>
+              
+              <div class="search-input-wrapper">
+                <i data-lucide="search" class="search-input-icon"></i>
+                <input type="text" id="sosSearchInput" class="search-input" placeholder="Search ID or category..." data-i18n="dashboard.search">
+              </div>
+            </div>
+
+            <div style="overflow-y:auto; max-height:420px;" id="sosListContainer">
+              <!-- Dynamic Emergency Cards populated by dashboard.js -->
+            </div>
+          </div>
+        </div>
+
+        <!-- EOC Resource Capacity & Activity Log Split Grid -->
+        <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap:1.25rem; margin-top:1.25rem;">
+          
+          <!-- EOC Operational Activity Log Panel -->
+          <div class="glass-panel" style="padding:1.35rem;">
+            <h3 style="font-size:1.05rem; font-weight:800; display:flex; align-items:center; gap:0.5rem; margin-bottom:1rem;">
+              <span>📡 Live EOC Activity & Verification Log</span>
+              <span class="live-dot green"></span>
+            </h3>
+
+            <div style="overflow-y:auto; max-height:280px; display:flex; flex-direction:column; gap:0.75rem;" id="overviewActivityLog">
+              <div class="glass-panel" style="padding:0.85rem; border-left:4px solid var(--danger);">
+                <div style="font-size:0.725rem; color:var(--text-secondary); display:flex; justify-content:space-between;">
+                  <span>INCIDENT BROADCAST</span>
+                  <span>10:45 AM</span>
+                </div>
+                <div style="font-weight:800; font-size:0.875rem; margin-top:0.2rem;">🚨 New SOS Received: Flood Emergency (RESQ-1042)</div>
+                <div style="font-size:0.775rem; color:var(--text-secondary);">Location: Banjara Hills, Hyderabad • Nearest Unit: Team Alpha (1.8 km)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Rescue Units & Shelters Status Meters -->
+          <div style="display:flex; flex-direction:column; gap:1.25rem;">
+            
+            <div class="glass-panel" style="padding:1.35rem;">
+              <h3 style="font-size:1.05rem; font-weight:800; margin-bottom:0.85rem; display:flex; justify-content:space-between; align-items:center;">
+                <span data-i18n="dashboard.rescueUnits">🚑 Rescue Team Availability</span>
+                <a href="/rescue-team.html" style="font-size:0.8rem; color:var(--primary); text-decoration:none; font-weight:700;">Manage Units →</a>
+              </h3>
+
+              <div style="display:flex; flex-direction:column; gap:0.65rem;" id="overviewUnitsMeters">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <div class="glass-panel" style="padding:1.35rem;">
+              <h3 style="font-size:1.05rem; font-weight:800; margin-bottom:0.85rem; display:flex; justify-content:space-between; align-items:center;">
+                <span data-i18n="dashboard.shelters">🏠 Shelters Capacity</span>
+                <a href="/shelters.html" style="font-size:0.8rem; color:var(--primary); text-decoration:none; font-weight:700;">All Hubs →</a>
+              </h3>
+
+              <div style="display:flex; flex-direction:column; gap:0.65rem;" id="overviewShelterMeters">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 2: LIVE SOS — DISPATCH & CITIZEN VERIFICATION CENTER -->
+      <div id="view-live-sos" class="eoc-view-panel" style="display:none;">
+        <!-- Status Filter Tabs Bar -->
+        <div class="glass-panel" style="padding:0.75rem 1rem; margin-bottom:1.25rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+          <div style="display:flex; gap:0.6rem;" id="sosStatusTabs">
+            <button class="btn btn-sm btn-primary sos-tab-btn active" data-filter="all" id="tab-btn-all">
+              📋 All SOS (<span id="count-tab-all">0</span>)
+            </button>
+            <button class="btn btn-sm btn-secondary sos-tab-btn" data-filter="received" id="tab-btn-received">
+              📥 Received (<span id="count-tab-received">0</span>)
+            </button>
+            <button class="btn btn-sm btn-secondary sos-tab-btn" data-filter="progress" id="tab-btn-progress">
+              🚑 On Progress (<span id="count-tab-progress">0</span>)
+            </button>
+            <button class="btn btn-sm btn-secondary sos-tab-btn" data-filter="completed" id="tab-btn-completed">
+              ✅ Completed (<span id="count-tab-completed">0</span>)
+            </button>
+          </div>
+
+          <div class="search-input-wrapper" style="max-width:280px;">
+            <i data-lucide="search" class="search-input-icon"></i>
+            <input type="text" id="fullSosSearchInput" class="search-input" placeholder="Search SOS ID or description..." data-i18n="dashboard.search">
+          </div>
+        </div>
+
+        <!-- Full SOS Cards Grid -->
+        <div id="fullSosGridContainer" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap:1.25rem;">
+          <!-- Populated dynamically by dashboard.js -->
+        </div>
+      </div>
+
+      <!-- VIEW 3: LIVE MAPS — FULL-WIDTH GIS RADAR MAP & ROUTE PROGRESS -->
+      <div id="view-live-map" class="eoc-view-panel" style="display:none;">
+        <div class="glass-panel" style="padding:1rem 1.25rem; margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+          <div>
+            <h3 style="font-size:1.15rem; font-weight:800; display:flex; align-items:center; gap:0.5rem;">
+              <span data-i18n="dashboard.liveMap">🗺️ Full-Screen GIS Tactical Radar Map</span>
+              <span class="live-dot green"></span>
+            </h3>
+            <div style="font-size:0.8rem; color:var(--text-secondary);">Real-time spatial tracking of citizen SOS coordinates, NDRF/SDRF rescue units, and animated route vectors</div>
+          </div>
+          <div style="display:flex; gap:0.75rem; align-items:center;">
+            <div style="font-size:0.785rem; color:var(--text-secondary); display:flex; gap:0.85rem; align-items:center;">
+              <span>🔴 Active SOS</span>
+              <span>🚑 Rescue Unit</span>
+              <span>🏠 Shelter</span>
+              <span>🟢 Safe Point</span>
+            </div>
+            <button class="btn btn-sm btn-secondary" onclick="window.ResQDashboard?.recenterMap()">
+              <i data-lucide="crosshair"></i> Recenter Map
+            </button>
+          </div>
+        </div>
+
+        <div class="map-container-wrapper glass-panel" style="min-height: 640px; height: 640px;">
+          <div id="full-map" style="width:100%; height:100%; min-height:640px;"></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Modular Scripts -->
+  <script src="/js/main.js"></script>
+  <script src="/js/theme.js"></script>
+  <script src="/js/translation.js"></script>
+  <script src="/js/websocket.js"></script>
+  <script src="/js/map.js"></script>
+  <script src="/js/dashboard.js"></script>
+  <script src="/js/simulation.js"></script>
+  <script src="/js/bot.js"></script>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

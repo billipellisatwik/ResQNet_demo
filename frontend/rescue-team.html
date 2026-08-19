@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rescue Units & Fleet Operations — ResQNet</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/accessibility.css">
+</head>
+<body>
+
+  <!-- Toast Container -->
+  <div id="notification-container"></div>
+
+  <!-- Top Navigation Header -->
+  <nav class="navbar">
+    <a href="/index.html" class="nav-brand">
+      <img src="/assets/logo.svg" alt="ResQNet Logo" class="nav-logo-icon">
+      <span class="text-gradient-danger">ResQNet</span>
+      <span style="font-size:0.75rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.08em; margin-left:0.5rem;" data-i18n="nav.rescueTeam">FLEET EOC</span>
+    </a>
+    
+    <div style="display:flex; align-items:center; gap:1.25rem;">
+      <select id="langSelect" class="btn btn-secondary" style="padding: 0.35rem 0.65rem;" aria-label="Select Language">
+        <option value="en">🇬🇧 EN</option>
+        <option value="te">🇮🇳 TE</option>
+        <option value="hi">🇮🇳 HI</option>
+      </select>
+
+      <select id="themeSelect" class="btn btn-secondary" style="padding: 0.35rem 0.55rem;" aria-label="Select Theme">
+        <option value="dark">🌌 Cyber Dark</option>
+        <option value="light">☀️ Clean Light</option>
+        <option value="tactical">☣️ Tactical</option>
+        <option value="crimson">🌋 Crimson</option>
+        <option value="oceanic">🌊 Oceanic</option>
+      </select>
+
+      <a href="/command-center.html" class="btn btn-secondary">
+        <i data-lucide="arrow-left"></i> <span data-i18n="nav.commandCenter">Command Center</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Main Layout -->
+  <div class="dashboard-layout">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="dashboard-sidebar">
+      <div class="sidebar-heading" data-i18n="nav.commandCenter">OPERATIONS CENTER</div>
+      
+      <a href="/command-center.html#overview" class="sidebar-nav-item">
+        <i data-lucide="layout-dashboard"></i> <span data-i18n="dashboard.overview">Overview</span>
+      </a>
+
+      <a href="/command-center.html#live-sos" class="sidebar-nav-item">
+        <i data-lucide="alert-triangle"></i> <span data-i18n="dashboard.liveSOS">Live SOS</span>
+      </a>
+
+      <a href="/command-center.html#live-map" class="sidebar-nav-item">
+        <i data-lucide="map"></i> <span data-i18n="dashboard.liveMap">Live GIS Map</span>
+      </a>
+
+      <a href="/weather.html" class="sidebar-nav-item">
+        <i data-lucide="cloud-rain"></i> <span data-i18n="dashboard.weather">Weather Intel</span>
+      </a>
+
+      <a href="/rescue-team.html" class="sidebar-nav-item active">
+        <i data-lucide="truck"></i> <span data-i18n="dashboard.rescueUnits">Rescue Units</span>
+      </a>
+
+      <a href="/shelters.html" class="sidebar-nav-item">
+        <i data-lucide="home"></i> <span data-i18n="dashboard.shelters">Shelters</span>
+      </a>
+
+      <a href="/resources.html" class="sidebar-nav-item">
+        <i data-lucide="package"></i> <span data-i18n="dashboard.resources">Resources</span>
+      </a>
+
+      <a href="/analytics.html" class="sidebar-nav-item">
+        <i data-lucide="bar-chart-2"></i> <span data-i18n="dashboard.analytics">Analytics</span>
+      </a>
+    </aside>
+
+    <!-- Workspace Area -->
+    <main class="dashboard-workspace">
+      
+      <!-- Top Stat Cards Bar -->
+      <div class="eoc-stats-grid">
+        <div class="stat-card glass-panel">
+          <div class="stat-icon-wrapper stat-icon-primary">🚑</div>
+          <div>
+            <div class="stat-value text-gradient-primary" id="stat-total-units">4</div>
+            <div class="stat-label" data-i18n="landing.rescueUnits">Total Rescue Units</div>
+          </div>
+        </div>
+
+        <div class="stat-card glass-panel">
+          <div class="stat-icon-wrapper stat-icon-success">⚡</div>
+          <div>
+            <div class="stat-value text-gradient-cyan" id="stat-avail-units">3</div>
+            <div class="stat-label" data-i18n="dashboard.availableUnits">Available for Dispatch</div>
+          </div>
+        </div>
+
+        <div class="stat-card glass-panel">
+          <div class="stat-icon-wrapper stat-icon-warning">⚠️</div>
+          <div>
+            <div class="stat-value" id="stat-busy-units" style="color:var(--warning);">1</div>
+            <div class="stat-label" data-i18n="dashboard.dispatchedUnits">Currently Dispatched</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rescue Units Management Grid -->
+      <div class="glass-panel" style="padding:1.25rem; margin-bottom:1.25rem;">
+        <h3 style="font-size:1.15rem; font-weight:800; display:flex; align-items:center; gap:0.5rem;">
+          <span data-i18n="dashboard.rescueUnits">🚑 NDRF / SDRF Emergency Rescue Units</span>
+          <span class="live-dot green"></span>
+        </h3>
+        <p style="font-size:0.85rem; color:var(--text-secondary);">Real-time status monitoring, telematics pinging, and unit dispatch availability control.</p>
+      </div>
+
+      <div id="rescueUnitsGrid" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap:1.25rem;">
+        <!-- Populated dynamically by rescue.js -->
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Modular Scripts -->
+  <script src="/js/main.js"></script>
+  <script src="/js/theme.js"></script>
+  <script src="/js/translation.js"></script>
+  <script src="/js/rescue.js"></script>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

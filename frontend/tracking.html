@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Rescue Tracking — ResQNet</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/citizen.css">
+  <link rel="stylesheet" href="../css/map.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="stylesheet" href="../css/accessibility.css">
+</head>
+<body>
+
+  <!-- Toast Container -->
+  <div id="notification-container"></div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="index.html" class="nav-brand">
+      <img src="../assets/logo.svg" alt="ResQNet Logo" class="nav-logo-icon">
+      <span class="text-gradient-danger">ResQNet</span>
+      <span style="font-size:0.75rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.08em; margin-left:0.5rem;">LIVE TRACKING</span>
+    </a>
+    
+    <div class="nav-controls">
+      <select id="langSelect" class="btn btn-secondary" style="padding: 0.35rem 0.65rem;" aria-label="Select Language">
+        <option value="en">🇬🇧 EN</option>
+        <option value="te">🇮🇳 TE</option>
+        <option value="hi">🇮🇳 HI</option>
+      </select>
+
+      <select id="themeSelect" class="btn btn-secondary" style="padding: 0.35rem 0.55rem;" aria-label="Select Theme">
+        <option value="dark">🌌 Cyber Dark</option>
+        <option value="light">☀️ Clean Light</option>
+        <option value="tactical">☣️ Tactical</option>
+        <option value="crimson">🌋 Crimson</option>
+        <option value="oceanic">🌊 Oceanic</option>
+      </select>
+
+      <a href="citizen.html" class="btn btn-secondary">
+        <i data-lucide="arrow-left"></i> Back to SOS
+      </a>
+    </div>
+  </nav>
+
+  <!-- Mobile Tracking Container -->
+  <main class="citizen-container">
+    
+    <!-- Active Emergency Banner Header -->
+    <div class="glass-panel" style="padding:1.5rem; border-left:4px solid var(--danger);" id="tracking-header-panel">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+        <span class="badge-tag" style="background:var(--danger-bg); color:var(--danger); border:1px solid var(--danger);" id="tracking-priority">CRITICAL SOS</span>
+        <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--text-secondary);" id="tracking-id">RESQ-1042</span>
+      </div>
+
+      <h2 style="font-size:1.35rem; font-weight:900;" id="tracking-category">Flood Emergency</h2>
+      <p style="font-size:0.875rem; color:var(--text-secondary);" id="tracking-desc">Emergency Assistance Required</p>
+    </div>
+
+    <!-- Status Message Alert Panel (Dynamic: Reached, Safety Report Sent, Person Safe) -->
+    <div id="tracking-status-alert-container"></div>
+
+    <!-- ETA & Progress Countdown Card -->
+    <div class="glass-panel" id="tracking-eta-card" style="padding:1.5rem; text-align:center; background:linear-gradient(135deg, rgba(6, 182, 212, 0.12) 0%, var(--bg-surface-solid) 100%);">
+      <div style="font-size:0.8rem; font-weight:700; text-transform:uppercase; color:var(--text-secondary);" data-i18n="tracking.eta">ESTIMATED TIME OF ARRIVAL</div>
+      
+      <div style="font-size:3.5rem; font-weight:900; color:var(--info); line-height:1.1; margin:0.35rem 0;" id="tracking-eta-val">6 MIN</div>
+      
+      <div style="font-size:0.9rem; font-weight:700; color:var(--text-primary);" id="tracking-unit-name">
+        Dispatching Nearest Rescue Team...
+      </div>
+      <div style="font-size:0.8rem; color:var(--text-secondary);" id="tracking-distance">Proximity: Calculating...</div>
+
+      <!-- Animated Progress Bar -->
+      <div style="height:10px; background:rgba(255,255,255,0.1); border-radius:999px; margin-top:1.25rem; overflow:hidden;">
+        <div style="height:100%; width:40%; background:linear-gradient(to right, #3B82F6, #06B6D4); border-radius:999px; transition:width 600ms ease;" id="tracking-progress-bar"></div>
+      </div>
+    </div>
+
+    <!-- Mini Tracking Leaflet GIS Map -->
+    <div class="map-container-wrapper glass-panel" style="min-height:320px;">
+      <div id="tracking-map"></div>
+    </div>
+
+    <!-- Secondary Action Button: "I Have Been Rescued" (Requirement #3) -->
+    <div id="already-rescued-container" style="margin-top: 1rem;">
+      <button id="btnAlreadyRescued" class="btn btn-secondary" style="width:100%; padding:0.85rem; border-color:var(--success); color:var(--success); font-weight:800; background:var(--success-bg); font-size:0.95rem;">
+        🟢 I Have Been Rescued
+      </button>
+    </div>
+
+    <!-- Live Rescue Status Timeline Stepper (Requirement #1) -->
+    <div class="glass-panel" style="padding:1.5rem; margin-top:1.25rem;">
+      <h3 style="font-size:1rem; font-weight:800; margin-bottom:1.25rem;">Live Rescue Progress Timeline</h3>
+      
+      <div style="display:flex; flex-direction:column; gap:1.25rem; border-left:2px solid var(--border-color); padding-left:1.25rem; margin-left:0.5rem;" id="tracking-timeline-stepper">
+        
+        <!-- Step 1: SOS Sent -->
+        <div style="position:relative;" id="step-sos-sent">
+          <div class="step-dot" style="position:absolute; left:-1.65rem; top:2px; width:14px; height:14px; border-radius:50%; background:var(--success); box-shadow:0 0 10px var(--success);"></div>
+          <div style="font-size:0.875rem; font-weight:800; color:var(--text-primary);">✓ 1. SOS Signal Sent</div>
+          <div style="font-size:0.775rem; color:var(--text-secondary);">GPS captured & priority calculated</div>
+        </div>
+
+        <!-- Step 2: Rescue Team Assigned -->
+        <div style="position:relative;" id="step-team-assigned">
+          <div class="step-dot" style="position:absolute; left:-1.65rem; top:2px; width:14px; height:14px; border-radius:50%; background:var(--info); box-shadow:0 0 10px var(--info);"></div>
+          <div style="font-size:0.875rem; font-weight:800; color:var(--text-primary);">✓ 2. Rescue Team Assigned</div>
+          <div style="font-size:0.775rem; color:var(--text-secondary);" id="step-assigned-detail">Nearest team selected by EOC</div>
+        </div>
+
+        <!-- Step 3: Team En Route -->
+        <div style="position:relative; opacity:0.4;" id="step-team-enroute">
+          <div class="step-dot" style="position:absolute; left:-1.65rem; top:2px; width:14px; height:14px; border-radius:50%; background:var(--border-color);"></div>
+          <div style="font-size:0.875rem; font-weight:700;">○ 3. Team En Route</div>
+          <div style="font-size:0.775rem; color:var(--text-secondary);">Rescue vehicle travelling along route</div>
+        </div>
+
+        <!-- Step 4: Team Reached -->
+        <div style="position:relative; opacity:0.4;" id="step-team-reached">
+          <div class="step-dot" style="position:absolute; left:-1.65rem; top:2px; width:14px; height:14px; border-radius:50%; background:var(--border-color);"></div>
+          <div style="font-size:0.875rem; font-weight:700;">○ 4. Team Reached Location</div>
+          <div style="font-size:0.775rem; color:var(--text-secondary);">On scene & initiating evacuation</div>
+        </div>
+
+        <!-- Step 5: Person Safe -->
+        <div style="position:relative; opacity:0.4;" id="step-person-safe">
+          <div class="step-dot" style="position:absolute; left:-1.65rem; top:2px; width:14px; height:14px; border-radius:50%; background:var(--border-color);"></div>
+          <div style="font-size:0.875rem; font-weight:700;">○ 5. Person Rescued / Safe</div>
+          <div style="font-size:0.775rem; color:var(--text-secondary);" id="step-safe-detail">Rescue complete & safety confirmed</div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Modular Scripts -->
+  <script src="../js/main.js"></script>
+  <script src="../js/theme.js"></script>
+  <script src="../js/translation.js"></script>
+  <script src="../js/websocket.js"></script>
+  <script src="../js/map.js"></script>
+  <script src="../js/tracking.js"></script>
+  <script src="../js/bot.js"></script>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

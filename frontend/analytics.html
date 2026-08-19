@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Platform Analytics & Intelligence — ResQNet</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <link rel="stylesheet" href="/css/base.css">
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/accessibility.css">
+</head>
+<body>
+
+  <!-- Toast Container -->
+  <div id="notification-container"></div>
+
+  <!-- Top Navigation Header -->
+  <nav class="navbar">
+    <a href="/index.html" class="nav-brand">
+      <img src="/assets/logo.svg" alt="ResQNet Logo" class="nav-logo-icon">
+      <span class="text-gradient-danger">ResQNet</span>
+      <span style="font-size:0.75rem; font-weight:700; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.08em; margin-left:0.5rem;" data-i18n="nav.analytics">ANALYTICS EOC</span>
+    </a>
+    
+    <div style="display:flex; align-items:center; gap:1.25rem;">
+      <select id="langSelect" class="btn btn-secondary" style="padding: 0.35rem 0.65rem;" aria-label="Select Language">
+        <option value="en">🇬🇧 EN</option>
+        <option value="te">🇮🇳 TE</option>
+        <option value="hi">🇮🇳 HI</option>
+      </select>
+
+      <select id="themeSelect" class="btn btn-secondary" style="padding: 0.35rem 0.55rem;" aria-label="Select Theme">
+        <option value="dark">🌌 Cyber Dark</option>
+        <option value="light">☀️ Clean Light</option>
+        <option value="tactical">☣️ Tactical</option>
+        <option value="crimson">🌋 Crimson</option>
+        <option value="oceanic">🌊 Oceanic</option>
+      </select>
+
+      <a href="/command-center.html" class="btn btn-secondary">
+        <i data-lucide="arrow-left"></i> <span data-i18n="nav.commandCenter">Command Center</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Main Layout -->
+  <div class="dashboard-layout">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="dashboard-sidebar">
+      <div class="sidebar-heading" data-i18n="nav.commandCenter">OPERATIONS CENTER</div>
+      
+      <a href="/command-center.html#overview" class="sidebar-nav-item">
+        <i data-lucide="layout-dashboard"></i> <span data-i18n="dashboard.overview">Overview</span>
+      </a>
+
+      <a href="/command-center.html#live-sos" class="sidebar-nav-item">
+        <i data-lucide="alert-triangle"></i> <span data-i18n="dashboard.liveSOS">Live SOS</span>
+      </a>
+
+      <a href="/command-center.html#live-map" class="sidebar-nav-item">
+        <i data-lucide="map"></i> <span data-i18n="dashboard.liveMap">Live GIS Map</span>
+      </a>
+
+      <a href="/weather.html" class="sidebar-nav-item">
+        <i data-lucide="cloud-rain"></i> <span data-i18n="dashboard.weather">Weather Intel</span>
+      </a>
+
+      <a href="/rescue-team.html" class="sidebar-nav-item">
+        <i data-lucide="truck"></i> <span data-i18n="dashboard.rescueUnits">Rescue Units</span>
+      </a>
+
+      <a href="/shelters.html" class="sidebar-nav-item">
+        <i data-lucide="home"></i> <span data-i18n="dashboard.shelters">Shelters</span>
+      </a>
+
+      <a href="/resources.html" class="sidebar-nav-item">
+        <i data-lucide="package"></i> <span data-i18n="dashboard.resources">Resources</span>
+      </a>
+
+      <a href="/analytics.html" class="sidebar-nav-item active">
+        <i data-lucide="bar-chart-2"></i> <span data-i18n="dashboard.analytics">Analytics</span>
+      </a>
+    </aside>
+
+    <!-- Workspace Area -->
+    <main class="dashboard-workspace">
+      
+      <!-- Analytics Header -->
+      <div class="glass-panel" style="padding:1.25rem; margin-bottom:1.25rem;">
+        <h3 style="font-size:1.15rem; font-weight:800; display:flex; align-items:center; gap:0.5rem;">
+          <span data-i18n="dashboard.analytics">📊 Emergency Analytics & Response Intelligence</span>
+          <span class="live-dot green"></span>
+        </h3>
+        <p style="font-size:0.85rem; color:var(--text-secondary);">Real-time dispatch metrics, 24-hour response time trends, and emergency category distribution.</p>
+      </div>
+
+      <!-- Charts Grid -->
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1.25rem;">
+        <div class="glass-panel" style="padding:1.5rem; min-height:380px;">
+          <h3 style="font-size:1.05rem; font-weight:800; margin-bottom:1.25rem;">🚨 SOS Signals by Category</h3>
+          <div style="height:280px; position:relative;">
+            <canvas id="categoryChart"></canvas>
+          </div>
+        </div>
+
+        <div class="glass-panel" style="padding:1.5rem; min-height:380px;">
+          <h3 style="font-size:1.05rem; font-weight:800; margin-bottom:1.25rem;">⚡ Response Time Trend (Past 24 Hours)</h3>
+          <div style="height:280px; position:relative;">
+            <canvas id="responseTimeChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Modular Scripts -->
+  <script src="/js/main.js"></script>
+  <script src="/js/theme.js"></script>
+  <script src="/js/translation.js"></script>
+  <script src="/js/analytics.js"></script>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
