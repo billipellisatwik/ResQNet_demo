@@ -355,6 +355,16 @@ class CitizenPortal {
             const sosRecord = response.data;
             localStorage.setItem('resqnet_active_sos', sosRecord.id);
 
+            try {
+                let localQueue = [];
+                const raw = localStorage.getItem('resqnet_sos_queue');
+                if (raw) localQueue = JSON.parse(raw);
+                if (!localQueue.some(item => item.id === sosRecord.id)) {
+                    localQueue.unshift(sosRecord);
+                }
+                localStorage.setItem('resqnet_sos_queue', JSON.stringify(localQueue));
+            } catch(e) {}
+
             if (response.isOffline || !navigator.onLine) {
                 if (window.ResQMesh) {
                     window.ResQMesh.broadcastSOS(payload);

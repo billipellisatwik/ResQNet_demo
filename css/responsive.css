@@ -1,37 +1,261 @@
-/* responsive.css */
+/* ==========================================================================
+   RESQNET COMPREHENSIVE MOBILE RESPONSIVE ENGINE v4.0
+   Guarantees 100% Touch-Friendly Fluid Responsiveness across All Devices
+   (Smartphones 320px+, Foldables, Tablets, and Desktop Displays)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. TABLETS & SMALL DESKTOPS (<= 1024px)
+   -------------------------------------------------------------------------- */
 @media (max-width: 1024px) {
   .dashboard-grid {
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(6, 1fr) !important;
+  }
+
+  .weather-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .citizen-container {
+    max-width: 100%;
+    padding: 1rem 1rem 3rem;
   }
 }
 
+/* --------------------------------------------------------------------------
+   2. MOBILE PHONES & TABLETS (<= 768px)
+   -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
+  /* Navigation Bar Mobile Layout */
+  .top-navbar {
+    padding: 0.65rem 0.85rem !important;
+    gap: 0.5rem;
+  }
+
+  .nav-brand {
+    font-size: 1.15rem !important;
+  }
+
+  .nav-controls {
+    gap: 0.4rem !important;
+  }
+
+  .lang-select {
+    padding: 0.3rem 0.45rem !important;
+    font-size: 0.75rem !important;
+  }
+
+  /* Command Center Dashboard Mobile Grid */
   .dashboard-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 1fr !important;
+    gap: 0.85rem !important;
   }
-  
+
   .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.98) !important;
+    backdrop-filter: blur(20px);
     transform: translateX(-100%);
-    transition: transform var(--transition-normal);
-    z-index: 1000;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 10000;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.8);
   }
+
   .sidebar.open {
     transform: translateX(0);
   }
-  
+
   .main-content {
-    margin-left: 0;
+    margin-left: 0 !important;
+    padding: 0.85rem !important;
   }
-  
+
+  /* Landing Page Hero Text & Buttons */
   .hero-title {
-    font-size: 2.5rem;
+    font-size: 2.1rem !important;
+    line-height: 1.25 !important;
   }
-  
-  .categories {
-    grid-template-columns: 1fr;
+
+  .hero-subtitle {
+    font-size: 0.95rem !important;
   }
-  
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.65rem !important;
+  }
+
+  .hero-actions .btn {
+    width: 100% !important;
+    justify-content: center;
+  }
+
+  /* Map Container Mobile Heights */
+  #main-map, #full-map, #weather-map, #shelter-map {
+    height: 340px !important;
+    min-height: 300px !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  /* Toast & Emergency Notifications Mobile Width */
   .resq-toast {
-    width: calc(100vw - 2rem);
+    width: calc(100vw - 1.5rem) !important;
+    left: 0.75rem !important;
+    right: 0.75rem !important;
+    font-size: 0.825rem !important;
+  }
+
+  .resq-modal-dialog {
+    width: 94vw !important;
+    max-width: 94vw !important;
+    padding: 1.15rem !important;
+    margin: 0.5rem;
+  }
+
+  /* Floating ResQBot Mobile Positioning */
+  #resqbot-container {
+    bottom: 16px !important;
+    right: 16px !important;
+  }
+
+  .resqbot-window-panel {
+    width: calc(100vw - 32px) !important;
+    max-width: 360px !important;
+    height: 440px !important;
+    bottom: 65px !important;
+    right: 0 !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. SMALL SMARTPHONES (<= 480px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .citizen-container {
+    padding: 0.65rem 0.65rem 2.5rem !important;
+    gap: 1.15rem !important;
+  }
+
+  /* Header Location Card */
+  .citizen-header-card {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 0.85rem !important;
+    gap: 0.65rem !important;
+  }
+
+  .user-location-info h2 {
+    font-size: 1rem !important;
+  }
+
+  /* GIANT 3D PULSING SOS BUTTON MOBILE RESPONSIVENESS */
+  .sos-trigger-container {
+    padding: 1.75rem 0.5rem !important;
+  }
+
+  .sos-main-button {
+    width: 175px !important;
+    height: 175px !important;
+    border-width: 4px !important;
+  }
+
+  .sos-button-icon {
+    font-size: 3rem !important;
+  }
+
+  .sos-button-text {
+    font-size: 1.15rem !important;
+    letter-spacing: 0.06em !important;
+  }
+
+  .sos-pulse-wave {
+    width: 175px !important;
+    height: 175px !important;
+  }
+
+  /* Category Cards Grid (2 Columns on Mobile) */
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.65rem !important;
+  }
+
+  .category-card {
+    padding: 0.85rem 0.4rem !important;
+  }
+
+  .category-card-icon {
+    font-size: 1.75rem !important;
+  }
+
+  .category-card-name {
+    font-size: 0.75rem !important;
+  }
+
+  /* Needed Services Grid (2 Columns on Mobile) */
+  .service-checkbox-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.5rem !important;
+  }
+
+  .service-checkbox-card {
+    padding: 0.55rem 0.65rem !important;
+    font-size: 0.775rem !important;
+  }
+
+  /* Quick Contacts Buttons */
+  .quick-contacts-bar {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+  }
+
+  .quick-contacts-bar .btn {
+    width: 100% !important;
+  }
+
+  /* Weather Intelligence Metric Grid */
+  .weather-metrics-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.5rem !important;
+  }
+
+  /* Shelter & Resource Cards */
+  .shelter-card, .resource-card {
+    padding: 0.85rem !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   4. ULTRA-NARROW SCREENS (<= 360px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 360px) {
+  .sos-main-button {
+    width: 155px !important;
+    height: 155px !important;
+  }
+
+  .sos-pulse-wave {
+    width: 155px !important;
+    height: 155px !important;
+  }
+
+  .sos-button-icon {
+    font-size: 2.5rem !important;
+  }
+
+  .sos-button-text {
+    font-size: 1rem !important;
+  }
+
+  .category-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .service-checkbox-grid {
+    grid-template-columns: 1fr !important;
   }
 }

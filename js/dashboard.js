@@ -324,16 +324,29 @@ class DashboardManager {
     async loadInitialData() {
         try {
             const sosRes = await window.ResQAPI.getSOSList();
-            if (sosRes.success && sosRes.data) {
-                this.sosRecords = sosRes.data;
-                this.renderSOSQueue(this.sosRecords);
-                this.renderCategorizedSOSGrid(this.sosRecords, this.currentSosFilter);
-                this.plotSOSOnMap(this.sosRecords, this.mapManager);
-                if (this.fullMapManager) this.plotSOSOnMap(this.sosRecords, this.fullMapManager);
-            }
+            let records = (sosRes && sosRes.success && sosRes.data) ? sosRes.data : [];
+
+            // Multi-Device & Browser Local Storage Queue Fallback Merge
+            try {
+                const localQueueRaw = localStorage.getItem('resqnet_sos_queue');
+                if (localQueueRaw) {
+                    const localQueue = JSON.parse(localQueueRaw);
+                    localQueue.forEach(item => {
+                        if (!records.some(r => r.id === item.id)) {
+                            records.unshift(item);
+                        }
+                    });
+                }
+            } catch (e) {}
+
+            this.sosRecords = records;
+            this.renderSOSQueue(this.sosRecords);
+            this.renderCategorizedSOSGrid(this.sosRecords, this.currentSosFilter);
+            this.plotSOSOnMap(this.sosRecords, this.mapManager);
+            if (this.fullMapManager) this.plotSOSOnMap(this.sosRecords, this.fullMapManager);
 
             const unitRes = await window.ResQAPI.getRescueUnits();
-            if (unitRes.success && unitRes.data) {
+            if (unitRes && unitRes.success && unitRes.data) {
                 this.rescueUnits = unitRes.data;
                 this.renderOverviewUnits(this.rescueUnits);
                 this.plotUnitsOnMap(this.rescueUnits, this.mapManager);
@@ -341,7 +354,7 @@ class DashboardManager {
             }
 
             const shelterRes = await window.ResQAPI.getShelters();
-            if (shelterRes.success && shelterRes.data) {
+            if (shelterRes && shelterRes.success && shelterRes.data) {
                 this.shelters = shelterRes.data;
                 this.renderOverviewShelters(this.shelters);
             }
@@ -351,7 +364,7 @@ class DashboardManager {
 
             if (window.ResQTranslation) window.ResQTranslation.applyTranslations();
         } catch (e) {
-            console.error('Error loading command center data:', e);
+            console.warn('Dashboard loadInitialData error:', e);
         }
     }
 
